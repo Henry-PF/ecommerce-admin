@@ -18,6 +18,9 @@ import UpdateRutas from './components/LandingPage/Rutas/UpdateRutas/Update';
 import ReadRutas from './components/LandingPage/Rutas/ReadRutas/Read';
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes';
 import './App.css';
+import axios from 'axios'
+
+axios.defaults.baseURL = "https://backend-dev-jnpc.1.us-1.fl0.io/api";
 
 function App() {
   return (
