@@ -1,0 +1,18 @@
+.btn_ {
+    position: absolute;
+    display: flex;
+    bottom: 10px;
+    width: 100%;
+    color: white;
+    font-size: 1.1em;
+}
+
+.btn_exit {
+    background-color: transparent;
+    border: none;
+    color: white;
+}
+
+.icon {
+    margin: 15px;
+}

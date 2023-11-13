@@ -1,0 +1,12 @@
+.sidebar {
+    width: 230px;
+}
+
+.page-link span {
+    color: black;
+    margin-left: 0 !important;
+}
+
+.page-link:focus {
+    box-shadow: none;
+}
