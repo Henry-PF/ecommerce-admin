@@ -29,6 +29,7 @@ export const deleteRute = (idRutes) => async () => {
 };
 export const deleteUsers = (iduser) => async () => {
     try {
+
         const response = await axios.post('usuarios/delete', iduser);
         console.log(response);
     } catch (error) {
@@ -38,7 +39,9 @@ export const deleteUsers = (iduser) => async () => {
 export const getAllRutes = () => {
     return async (dispatch) => {
         try {
+
             const { data } = await axios.get('rutas/getAll');
+
             dispatch({
                 type: GET_ALL_RUTES,
                 payload: data.data
@@ -52,6 +55,7 @@ export const getAllUsers = () => {
     return async (dispatch) => {
         try {
             const { data } = await axios.get('usuarios/getAll');
+
             console.log(data);
             dispatch({
                 type: GET_ALL_USERS,
@@ -67,6 +71,7 @@ export const userLogin = () => {
     return async (dispatch) => {
         try {
             const { data } = await axios.get('auth/perfil')
+
             console.log('user', data.user);
             dispatch({
                 type: USER_LOGIN,
@@ -82,6 +87,7 @@ export const getCities = () => {
     return async (dispatch) => {
         try {
             const { data } = await axios.get('ciudades/get_cities');
+
             dispatch({
                 type: GET_CITIES,
                 payload: data,
@@ -94,6 +100,7 @@ export const getCities = () => {
 export const getTerminales = () => {
     return async (dispatch) => {
         try {
+
             const { data } = await axios.get('terminal/get');
             dispatch({
                 type: GET_TERMINAL,
@@ -108,7 +115,9 @@ export const getTerminales = () => {
 export const getProvince = () => {
     return async (dispatch) => {
         try {
+
             const { data } = await axios.get('provincias/get_province');
+
             dispatch({
                 type: GET_PROVINCE,
                 payload: data,
@@ -122,7 +131,9 @@ export const getProvince = () => {
 export const getAllCompanies = () => {
     return async (dispatch) => {
         try {
+
             const { data } = await axios.get('empresas/get');
+
             dispatch({
                 type: GET_ALL_COMPANIES,
                 payload: data
@@ -136,7 +147,8 @@ export const getAllCompanies = () => {
 export const getProducts = () => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get('http://localhost:3002/api/productos')
+            const { data } = await axios.get('api/productos')
+
             dispatch({
                 type: GET_PRODUCTOS,
                 payload: data.data,
