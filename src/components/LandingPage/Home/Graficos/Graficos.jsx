@@ -28,6 +28,7 @@ function Graficos(props) {
             const dataToSend = { id: id.id };
             dispatch(deleteUsers(dataToSend));
             dispatch(getAllUsers());
+            alert("usuario borrado");
         } else {
             const dataToSend = { id: id.id };
             dispatch(deleteUsers(dataToSend));
@@ -73,7 +74,7 @@ function Graficos(props) {
         setSelectedUser(selectedUser);
         setShow(true);
     };
-
+    console.log(selectedUser);
     useEffect(() => {
         dispatch(getAllUsers());
     }, [show]);
@@ -98,7 +99,9 @@ function Graficos(props) {
                     {/* /.content */}
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Modificar Usuario</Modal.Title>
+                            <Modal.Title>
+                                Modificar {selectedUser.usuario}
+                            </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <form action="" className={styles.form}>
