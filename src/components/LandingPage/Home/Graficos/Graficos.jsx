@@ -16,6 +16,8 @@ function Graficos(props) {
     const usersToMap = props.AllUsers;
     let totalUsers = 0;
 
+    const countAdmin = usersToMap.filter((user) => user.type !== "usuario");
+
     const countUsers = usersToMap.map(() => {
         return (totalUsers += 1);
     });
@@ -48,7 +50,7 @@ function Graficos(props) {
         console.log(selectedUser);
         try {
             const data = await axios.post(
-                "https://backend-dev-jnpc.1.us-1.fl0.io/api/usuarios/update",
+                "http://localhost:3002/api/usuarios/update",
                 selectedUser
             );
             if (data.status === 200) {
@@ -74,7 +76,7 @@ function Graficos(props) {
         setSelectedUser(selectedUser);
         setShow(true);
     };
-    console.log(selectedUser);
+    console.log(usersToMap);
     useEffect(() => {
         dispatch(getAllUsers());
     }, [show]);
@@ -113,9 +115,12 @@ function Graficos(props) {
                                     <Form.Control
                                         className={styles.form_input}
                                         type="text"
-                                        placeholder="Nombre"
+                                        /* placeholder="Nombre" */
                                         name="nombre"
                                         value={selectedUser.nombre}
+                                        placeholder={
+                                            selectedUser?.persona?.nombre
+                                        }
                                         onChange={(event) =>
                                             handleChange(event)
                                         }
@@ -130,9 +135,12 @@ function Graficos(props) {
                                     <Form.Control
                                         className={styles.form_input}
                                         type="text"
-                                        placeholder="Apellido"
+                                        /* placeholder="Apellido" */
                                         name="apellido"
                                         value={selectedUser.apellido}
+                                        placeholder={
+                                            selectedUser?.persona?.apellido
+                                        }
                                         onChange={(event) =>
                                             handleChange(event)
                                         }
@@ -147,9 +155,12 @@ function Graficos(props) {
                                     <Form.Control
                                         className={styles.form_input}
                                         type="text"
-                                        placeholder="Correo"
+                                        /* placeholder="Correo" */
                                         name="correo"
                                         value={selectedUser.correo}
+                                        placeholder={
+                                            selectedUser?.persona?.correo
+                                        }
                                         onChange={(event) =>
                                             handleChange(event)
                                         }
@@ -164,9 +175,12 @@ function Graficos(props) {
                                     <Form.Control
                                         className={styles.form_input}
                                         type="text"
-                                        placeholder="Telefono"
+                                        /* placeholder="Telefono" */
                                         name="telefono"
                                         value={selectedUser.telefono}
+                                        placeholder={
+                                            selectedUser?.persona?.telefono
+                                        }
                                         onChange={(event) =>
                                             handleChange(event)
                                         }
@@ -181,9 +195,12 @@ function Graficos(props) {
                                     <Form.Control
                                         className={styles.form_input}
                                         type="text"
-                                        placeholder="direccion"
+                                        /* placeholder="direccion" */
                                         name="direccion"
                                         value={selectedUser.direccion}
+                                        placeholder={
+                                            selectedUser?.persona?.direccion
+                                        }
                                         onChange={(event) =>
                                             handleChange(event)
                                         }
@@ -198,9 +215,10 @@ function Graficos(props) {
                                     <Form.Control
                                         className={styles.form_input}
                                         type="text"
-                                        placeholder="dni"
+                                        /* placeholder="dni" */
                                         name="dni"
                                         value={selectedUser.dni}
+                                        placeholder={selectedUser?.persona?.dni}
                                         onChange={(event) =>
                                             handleChange(event)
                                         }
@@ -223,7 +241,7 @@ function Graficos(props) {
                     </Modal>
                     <div className={styles.divContenido}>
                         <div className="container-fluid row">
-                            <div className="col-lg-6 m-auto">
+                            <div className="col-lg-4 m-auto">
                                 {/* small card */}
                                 <div className="small-box bg-warning">
                                     <div className="inner">
@@ -237,7 +255,21 @@ function Graficos(props) {
                                     </div>
                                 </div>
                             </div>
+                            <div className="col-lg-4 m-auto">
+                                <div className="small-box bg-info">
+                                    <div className="inner">
+                                        <h3>{countAdmin.length}</h3>
+                                        <p className="fw-semibold">
+                                            Admin Users
+                                        </p>
+                                    </div>
+                                    <div className="icon">
+                                        <i className="fas fa-user-plus" />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                         <section className="content">
                             <div className="container-fluid">
                                 <div className="row">
@@ -259,6 +291,7 @@ function Graficos(props) {
                                                         <tr className="text-center">
                                                             <th>Nombre</th>
                                                             <th>Estado</th>
+                                                            <th>Rango</th>
                                                             <th>Edit</th>
                                                             <th>Delete</th>
                                                         </tr>

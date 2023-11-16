@@ -13,7 +13,7 @@ import {
     CREATED_ROUTE,
 } from "./action-types";
 
-const url = "https://backend-dev-jnpc.1.us-1.fl0.io/api";
+const url = "http://localhost:3002/api";
 
 export const searchResults = (data) => {
     return {

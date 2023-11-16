@@ -9,6 +9,7 @@ const Row = ({ usuario, deleteOnClick, updateOnClick }) => {
                 {usuario.persona?.nombre || usuario.usuario}
             </td>
             <td className="jsgrid-cell">{usuario.statud.nombre}</td>
+            <td className="jsgrid-cell">{usuario.type}</td>
             <td className={styles.td}>
                 <button
                     className={styles.button}
