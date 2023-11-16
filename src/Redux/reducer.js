@@ -1,8 +1,9 @@
-import { GET_CITIES, GET_PROVINCE, SEARCH_RESULTS, USER_LOGIN, USER_REGISTER, GET_TERMINAL, GET_ALL_RUTES, GET_BUSES, GET_ALL_COMPANIES, GET_ALL_USERS, CREATED_ROUTE } from './action-types'
+import { GET_CITIES, GET_PROVINCE, SEARCH_RESULTS, USER_LOGIN, USER_REGISTER, GET_TERMINAL, GET_ALL_RUTES, GET_PRODUCTOS, GET_ALL_COMPANIES, GET_ALL_USERS, CREATED_ROUTE, GET_ALL_CATEGORIES} from './action-types'
 
 const initialState = {
     data: [],
-    buses: [],
+    products: [],
+    categories: {},
     users: [],
     trips: [],
     cities: [],
@@ -60,15 +61,20 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 companies: action.payload,
             }
-        case GET_BUSES:
+        case GET_PRODUCTOS:
             return {
                 ...state,
-                buses: action.payload,
+                products: action.payload,
             }
         case CREATED_ROUTE:
             return {
                 ...state,
                 route: action.payload
+            }
+        case GET_ALL_CATEGORIES:
+            return {
+                ...state,
+                categories: action.payload,
             }
         default:
             return state;

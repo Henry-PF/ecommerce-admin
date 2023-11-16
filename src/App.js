@@ -1,11 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import Home from './components/LandingPage/Home/Home';
 import Login from './components/Login/Login';
-/* Rutas Buses */
-import Create from './components/LandingPage/Buses/CreateBuses/Create';
-import Delete from './components/LandingPage/Buses/DeleteBuses/Delete';
-import Update from './components/LandingPage/Buses/UpdateBuses/Update';
-import Read from './components/LandingPage/Buses/ReadBuses/Read';
+/* Rutas Product */
+import Create from './components/LandingPage/Productos/CreateProduct/Create';
+import Update from './components/LandingPage/Productos/UpdateProduct/Update';
 /* Rutas Empresas */
 import CreateEmpresas from './components/LandingPage/Empresas/CreateEmpresas/Create';
 import DeleteEmpresas from './components/LandingPage/Empresas/DeleteEmpresas/Delete';
@@ -26,10 +24,8 @@ function App() {
         <Route exact path='/' element={<Login />} />
         <Route element={<ProtectedRoutes />}>
           {/* Rutas Buses */}
-          <Route exact path='/admin/buses/create' element={<Create />} />
-          <Route exact path='/admin/buses/delete' element={<Delete />} />
-          <Route exact path='/admin/buses/update' element={<Update />} />
-          <Route exact path='/admin/buses/read' element={<Read />} />
+          <Route exact path='/admin/Productos/create' element={<Create />} />
+          <Route exact path='/admin/Productos/updateDelete' element={<Update />} />
           {/* Rutas Empresas */}
           <Route exact path='/admin/empresas/create' element={<CreateEmpresas />} />
           <Route exact path='/admin/empresas/delete' element={<DeleteEmpresas />} />

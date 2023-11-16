@@ -4,11 +4,11 @@ import '../home.css'
 
 export default function SideBar() {
     // --------------------------------Lista de Buses---------------------------------------
-    const [Busesistrue, setBusesistrue] = React.useState(false);
-    const [BusesOpen, setBusesOpen] = React.useState("nav-item menu-open");
-    const [BusesClose, setBusesClose] = React.useState("nav-item");
+    const [ProductIsTrue, setProductIsTrue] = React.useState(false);
+    const [ProductOpen, setProductOpen] = React.useState("nav-item menu-open");
+    const [ProductClose, setProductClose] = React.useState("nav-item");
     const BusesHandle = () => {
-        return setBusesistrue(!Busesistrue);
+        return setProductIsTrue(!ProductIsTrue);
     }
     // -----------------------------------------------------------------------
     // --------------------------------Lista de Empresas---------------------------------------
@@ -46,25 +46,25 @@ export default function SideBar() {
                 <div className="sidebar">
                     <nav className="mt-2">
                         <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            <li className={Busesistrue === true ? BusesOpen : BusesClose} onClick={() => BusesHandle()}>
+                            <li className={ProductIsTrue === true ? ProductOpen : ProductClose} onClick={() => BusesHandle()}>
                                 <a href="#" className="nav-link">
                                     <i className="nav-icon fas fa-edit" />
                                     <p>
-                                        Buses
+                                        Productos
                                         <i className="fas fa-angle-left right" />
                                     </p>
                                 </a>
                                 <ul className="nav nav-treeview">
                                     <li className="nav-item">
-                                        <a href="/admin/buses/update" className="nav-link">
+                                        <a href="/admin/Productos/updateDelete" className="nav-link">
                                             <i className="far fa-circle nav-icon" />
-                                            <p>Panel de Control</p>
+                                            <p>Editar-Eliminar Productos</p>
                                         </a>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="/admin/buses/create" className="nav-link ">
+                                        <a href="/admin/Productos/create" className="nav-link ">
                                             <i className="far fa-circle nav-icon" />
-                                            <p>Agregar Bus</p>
+                                            <p>Agregar Producto</p>
                                         </a>
                                     </li>
                                 </ul>
