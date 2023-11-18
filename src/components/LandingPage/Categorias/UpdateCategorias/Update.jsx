@@ -7,7 +7,7 @@ import styles from "./Update.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { getAllCompanies } from "../../../../Redux/actions";
+import { getAllCategories } from "../../../../Redux/actions";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
@@ -53,10 +53,11 @@ export default function Update() {
 
     const handleSaveChanges = async () => {
         try {
-            const data = await axios.put(
-                "https://api-54nh.onrender.com/empresas/update",
-                selectedCompany.dato
+            const data = await axios.post(
+                "http://localhost:3002/api/categorias/update",
+                selectedCompany
             );
+            console.log(data);
             if (data.status === 200) {
                 Swal.fire({
                     title: data.data.message,
@@ -75,25 +76,26 @@ export default function Update() {
     };
 
     const handleDelete = async (id) => {
+        const selectedCompany = companies.data?.find(
+            (company) => company.id === id
+        );
+        console.log(selectedCompany);
         try {
             Swal.fire({
                 title: "Esta Seguro?",
-                text: "Deshabilitar este sevicio",
+                text: "Desactivar esta categoria",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Si, deshabilitar!",
+                confirmButtonText: "Si",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const { data } = axios.put(
-                        `https://api-54nh.onrender.com/empresas/delete/${id}/2`
+                    const { data } = axios.post(
+                        `http://localhost:3002/api/categorias/delete`,
+                        selectedCompany
                     );
-                    Swal.fire(
-                        "Servicio Deshabilitado!",
-                        "El Servicio fue deshabilidato exitosamente.",
-                        "success"
-                    ).then(() => {
+                    Swal.fire("Categoria inavilitada!", "success").then(() => {
                         window.location.reload();
                     });
                 }
@@ -104,25 +106,26 @@ export default function Update() {
     };
 
     const handleActive = async (id) => {
+        const selectedCompany = companies.data?.find(
+            (company) => company.id === id
+        );
+        console.log(selectedCompany);
         try {
             Swal.fire({
                 title: "Esta seguro?",
-                text: "Habilitar este serivicio",
+                text: "Habilitar esta categoria",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Si, habilitar!",
+                confirmButtonText: "Si",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const { data } = axios.put(
-                        `https://api-54nh.onrender.com/empresas/delete/${id}/1`
+                    const { data } = axios.post(
+                        `http://localhost:3002/api/categorias/delete`,
+                        selectedCompany
                     );
-                    Swal.fire(
-                        "Servicio Habilitado!",
-                        "El Servicio fue habilidato exitosamente.",
-                        "success"
-                    ).then(() => {
+                    Swal.fire("Categoria habilitada!", "success").then(() => {
                         window.location.reload();
                     });
                 }
@@ -164,9 +167,9 @@ export default function Update() {
     };
 
     useEffect(() => {
-        dispatch(getAllCompanies());
+        dispatch(getAllCategories());
     }, [dispatch, show]);
-
+    console.log(selectedCompany);
     return (
         <div className="wrapper">
             {/* Main Sidebar Container */}
@@ -177,8 +180,10 @@ export default function Update() {
                 <section className="content-header">
                     <div className="container-fluid">
                         <div className="row mb-2">
-                            <div className="col-sm-6">
-                                <h1 className="">Update</h1>
+                            <div className="col-sm-12">
+                                <h1 className="text-center">
+                                    Lista de categorias
+                                </h1>
                             </div>
                         </div>
                     </div>
@@ -187,60 +192,18 @@ export default function Update() {
 
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Modificar Empresa</Modal.Title>
+                        <Modal.Title>
+                            Modificar {selectedCompany.nombre}
+                        </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <form action="" className={styles.form}>
                             <div className={styles.input}>
-                                <label>Nombre</label>
+                                <label>Nombre:</label>
                                 <input
                                     type="text"
                                     name="nombre"
                                     value={selectedCompany.dato?.nombre}
-                                    onChange={(event) =>
-                                        handleChange(event, "dato")
-                                    }
-                                />
-                            </div>
-                            <div className={styles.input}>
-                                <label>Direccion</label>
-                                <input
-                                    type="text"
-                                    name="direccion"
-                                    value={selectedCompany.dato?.direccion}
-                                    onChange={(event) =>
-                                        handleChange(event, "dato")
-                                    }
-                                />
-                            </div>
-                            <div className={styles.input}>
-                                <label>Correo Electronico</label>
-                                <input
-                                    type="text"
-                                    name="correo"
-                                    value={selectedCompany.dato?.correo}
-                                    onChange={(event) =>
-                                        handleChange(event, "dato")
-                                    }
-                                />
-                            </div>
-                            <div className={styles.input}>
-                                <label>Telefono</label>
-                                <input
-                                    type="text"
-                                    name="telefono"
-                                    value={selectedCompany.dato?.telefono}
-                                    onChange={(event) =>
-                                        handleChange(event, "dato")
-                                    }
-                                />
-                            </div>
-                            <div className={styles.input}>
-                                <label>CUIT</label>
-                                <input
-                                    type="text"
-                                    name="cuit"
-                                    value={selectedCompany.dato?.cuit}
                                     onChange={(event) =>
                                         handleChange(event, "dato")
                                     }
@@ -316,7 +279,7 @@ export default function Update() {
                                                                 styles.th
                                                             }
                                                         >
-                                                            #
+                                                            id
                                                         </th>
                                                         <th
                                                             className={
@@ -359,8 +322,9 @@ export default function Update() {
                                                                             styles.td
                                                                         }
                                                                     >
-                                                                        {index +
-                                                                            1}
+                                                                        {
+                                                                            company.id
+                                                                        }
                                                                     </td>
                                                                     <td
                                                                         className={
@@ -368,26 +332,20 @@ export default function Update() {
                                                                         }
                                                                     >
                                                                         {
-                                                                            company
-                                                                                .dato
-                                                                                .nombre
+                                                                            company.nombre
                                                                         }
                                                                     </td>
                                                                     <td
                                                                         className={
-                                                                            company
-                                                                                .statud
-                                                                                .id ===
+                                                                            company.id_statud ===
                                                                             1
                                                                                 ? styles.activo
                                                                                 : styles.inactivo
                                                                         }
                                                                     >
-                                                                        {
-                                                                            company
-                                                                                .statud
-                                                                                .nombre
-                                                                        }
+                                                                        {company.id_statud
+                                                                            ? "Activo"
+                                                                            : "Inactivo"}
                                                                     </td>
                                                                     <td
                                                                         className={
@@ -404,9 +362,7 @@ export default function Update() {
                                                                                 )
                                                                             }
                                                                             disabled={
-                                                                                company
-                                                                                    .statud
-                                                                                    .id !==
+                                                                                company.id_statud !==
                                                                                 1
                                                                             }
                                                                         >
@@ -422,9 +378,7 @@ export default function Update() {
                                                                             styles.td
                                                                         }
                                                                     >
-                                                                        {company
-                                                                            .statud
-                                                                            .id ===
+                                                                        {company.id_statud ===
                                                                         1 ? (
                                                                             <button
                                                                                 className={
@@ -475,13 +429,6 @@ export default function Update() {
                     </div>
                 </section>
             </div>
-            {/* /.content-wrapper */}
-            <footer className="main-footer"></footer>
-            {/* Control Sidebar */}
-            <aside className="control-sidebar control-sidebar-dark">
-                {/* Control sidebar content goes here */}
-            </aside>
-            {/* /.control-sidebar */}
         </div>
     );
 }

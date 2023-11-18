@@ -1,8 +1,15 @@
-.th, .td {
+.th,
+.td {
     padding: 10px;
     text-align: center;
 }
-.button{
+.button {
     border: none;
     background: transparent;
+}
+.input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
 }

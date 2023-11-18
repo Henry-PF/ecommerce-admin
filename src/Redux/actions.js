@@ -150,12 +150,10 @@ export const getProvince = () => {
     };
 };
 
-export const getAllCompanies = () => {
+export const getAllCategories = () => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get(
-                "https://api-54nh.onrender.com/empresas/get"
-            );
+            const { data } = await axios.get(`${url}/categorias`);
             dispatch({
                 type: GET_ALL_COMPANIES,
                 payload: data,
