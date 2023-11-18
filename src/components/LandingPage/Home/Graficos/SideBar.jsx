@@ -66,49 +66,6 @@ export default function SideBar() {
                         >
                             <li
                                 className={
-                                    Busesistrue === true
-                                        ? BusesOpen
-                                        : BusesClose
-                                }
-                                onClick={() => BusesHandle()}
-                            >
-                                <a href="#" className="nav-link">
-                                    <i className="nav-icon fas fa-edit" />
-                                    <p>
-                                        Buses
-                                        <i className="fas fa-angle-left right" />
-                                    </p>
-                                </a>
-                                <ul className="nav nav-treeview">
-                                    <li className="nav-item">
-                                        <a
-                                            href="/admin/buses/update"
-                                            className="nav-link"
-                                        >
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Panel de Control</p>
-                                        </a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a
-                                            href="/admin/buses/create"
-                                            className="nav-link "
-                                        >
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Agregar Bus</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <ul
-                            className="nav nav-pills nav-sidebar flex-column"
-                            data-widget="treeview"
-                            role="menu"
-                            data-accordion="false"
-                        >
-                            <li
-                                className={
                                     Empresasistrue === true
                                         ? EmpresasOpen
                                         : EmpresasClose

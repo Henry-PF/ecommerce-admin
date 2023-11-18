@@ -18,6 +18,7 @@ import {
     BsArrowRight,
     BsArrowLeft,
 } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 export default function Update() {
     const [show, setShow] = useState(false);
@@ -176,6 +177,16 @@ export default function Update() {
             <SideBar></SideBar>
             {/* Content Wrapper. Contains page content */}
             <div className="content-wrapper">
+                <section className="content-header">
+                    <div className={styles.botonBack}>
+                        <Link
+                            to="/admin/home"
+                            className="btn btn-outline-secondary"
+                        >
+                            Volver
+                        </Link>
+                    </div>
+                </section>
                 {/* Content Header (Page header) */}
                 <section className="content-header">
                     <div className="container-fluid">

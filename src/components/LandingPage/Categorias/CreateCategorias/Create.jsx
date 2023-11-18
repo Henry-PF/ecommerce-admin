@@ -50,7 +50,10 @@ export default function Create() {
                 {/* Content Header (Page header) */}
                 <section className="content-header">
                     <div className={styles.botonBack}>
-                        <Link to="/admin/home" className="btn btn-outline-dark">
+                        <Link
+                            to="/admin/home"
+                            className="btn btn-outline-secondary"
+                        >
                             Volver
                         </Link>
                     </div>
