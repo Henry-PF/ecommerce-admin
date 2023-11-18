@@ -123,7 +123,7 @@ export default function Update() {
             }).then((result) => {
                 if (result.isConfirmed) {
                     const { data } = axios.post(
-                        `http://localhost:3002/api/categorias/delete`,
+                        `http://localhost:3002/api/categorias/active`,
                         selectedCompany
                     );
                     Swal.fire("Categoria habilitada!", "success").then(() => {
@@ -354,9 +354,10 @@ export default function Update() {
                                                                                 : styles.inactivo
                                                                         }
                                                                     >
-                                                                        {company.id_statud
-                                                                            ? "Activo"
-                                                                            : "Inactivo"}
+                                                                        {company.id_statud !==
+                                                                        1
+                                                                            ? "Inactivo"
+                                                                            : "Activo"}
                                                                     </td>
                                                                     <td
                                                                         className={

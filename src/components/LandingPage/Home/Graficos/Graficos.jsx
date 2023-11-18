@@ -26,11 +26,11 @@ function Graficos(props) {
     const [selectedUser, setSelectedUser] = React.useState({});
 
     const deleteOnClick = (id) => {
+        dispatch(deleteUsers(id));
+        dispatch(getAllUsers());
+        alert("usuario borrado");
         if (id.id_status === 1) {
             /* const dataToSend = { id: id.id }; */
-            dispatch(deleteUsers(id));
-            dispatch(getAllUsers());
-            alert("usuario borrado");
         } else {
             /* const dataToSend = { id: id.id }; */
             dispatch(deleteUsers(id));

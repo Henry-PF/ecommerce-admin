@@ -29,7 +29,7 @@ const Row = ({ usuario, deleteOnClick, updateOnClick }) => {
                     onClick={() => {
                         const idUser = {
                             id: usuario.id,
-                            id_status: usuario.statud.id,
+                            id_status: 2,
                         };
                         return deleteOnClick(idUser);
                     }}
