@@ -27,13 +27,13 @@ function Graficos(props) {
 
     const deleteOnClick = (id) => {
         if (id.id_status === 1) {
-            const dataToSend = { id: id.id };
-            dispatch(deleteUsers(dataToSend));
+            /* const dataToSend = { id: id.id }; */
+            dispatch(deleteUsers(id));
             dispatch(getAllUsers());
             alert("usuario borrado");
         } else {
-            const dataToSend = { id: id.id };
-            dispatch(deleteUsers(dataToSend));
+            /* const dataToSend = { id: id.id }; */
+            dispatch(deleteUsers(id));
             dispatch(getAllUsers());
         }
     };
@@ -56,7 +56,7 @@ function Graficos(props) {
             if (data.status === 200) {
                 console.log(data);
                 Swal.fire({
-                    title: data.message,
+                    title: "Usuario actualizado",
                     icon: "success",
                 });
                 setShow(false);
@@ -74,9 +74,10 @@ function Graficos(props) {
     const updateOnClick = (ruteId) => {
         const selectedUser = usersToMap?.find((ruta) => ruta.id === ruteId);
         setSelectedUser(selectedUser);
+        console.log(selectedUser);
         setShow(true);
     };
-    console.log(usersToMap);
+
     useEffect(() => {
         dispatch(getAllUsers());
     }, [show]);
@@ -147,26 +148,7 @@ function Graficos(props) {
                                         required
                                     />
                                 </FloatingLabel>
-                                <FloatingLabel
-                                    controlId="floatingPassword"
-                                    label="Correo"
-                                    className="w-100 me-2"
-                                >
-                                    <Form.Control
-                                        className={styles.form_input}
-                                        type="text"
-                                        /* placeholder="Correo" */
-                                        name="correo"
-                                        value={selectedUser.correo}
-                                        placeholder={
-                                            selectedUser?.persona?.correo
-                                        }
-                                        onChange={(event) =>
-                                            handleChange(event)
-                                        }
-                                        required
-                                    />
-                                </FloatingLabel>
+
                                 <FloatingLabel
                                     controlId="floatingPassword"
                                     label="Telefono"
@@ -289,7 +271,7 @@ function Graficos(props) {
                                                 >
                                                     <thead>
                                                         <tr className="text-center">
-                                                            <th>Nombre</th>
+                                                            <th>Usuario</th>
                                                             <th>Estado</th>
                                                             <th>Rango</th>
                                                             <th>Edit</th>
