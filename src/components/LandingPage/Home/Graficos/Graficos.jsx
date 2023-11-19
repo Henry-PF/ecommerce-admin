@@ -16,7 +16,7 @@ function Graficos(props) {
     const usersToMap = props.AllUsers;
     let totalUsers = 0;
 
-    const countAdmin = usersToMap.filter((user) => user.type !== "usuario");
+    const countAdmin = usersToMap.filter((user) => user.statud.id !== 1);
 
     const countUsers = usersToMap.map(() => {
         return (totalUsers += 1);
@@ -225,7 +225,7 @@ function Graficos(props) {
                         <div className="container-fluid row">
                             <div className="col-lg-4 m-auto">
                                 {/* small card */}
-                                <div className="small-box bg-warning">
+                                <div className="small-box bg-primary">
                                     <div className="inner">
                                         <h3>{totalUsers}</h3>
                                         <p className="fw-semibold">
@@ -238,11 +238,11 @@ function Graficos(props) {
                                 </div>
                             </div>
                             <div className="col-lg-4 m-auto">
-                                <div className="small-box bg-info">
+                                <div className="small-box bg-danger">
                                     <div className="inner">
                                         <h3>{countAdmin.length}</h3>
                                         <p className="fw-semibold">
-                                            Admin Users
+                                            Banned Users
                                         </p>
                                     </div>
                                     <div className="icon">
