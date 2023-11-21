@@ -1,4 +1,4 @@
-import { getTerminales, createRoute, getCities, getBuses } from '../../../../Redux/actions';
+import { getTerminales, createRoute, getCities,  } from '../../../../Redux/actions';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useDispatch, useSelector } from 'react-redux';
 import "react-datepicker/dist/react-datepicker.css";
@@ -105,7 +105,6 @@ function Create(props) {
 
   useEffect(() => {
     dispatch(getTerminales());
-    dispatch(getBuses())
   }, [dispatch])
 
 
