@@ -1,4 +1,18 @@
-import { GET_CITIES, GET_PROVINCE, SEARCH_RESULTS, USER_LOGIN, USER_REGISTER, GET_TERMINAL, GET_ALL_RUTES, GET_PRODUCTOS, GET_ALL_COMPANIES, GET_ALL_USERS, CREATED_ROUTE, GET_ALL_CATEGORIES} from './action-types'
+import {
+    GET_CITIES,
+    GET_PROVINCE,
+    SEARCH_RESULTS,
+    USER_LOGIN,
+    GET_TERMINAL,
+    GET_ALL_RUTES,
+    DELETE_RUTE,
+    GET_ALL_PRODUCTS,
+    GET_PRODUCTOS,
+    GET_ALL_CATEGORIES,
+    GET_ALL_COMPANIES,
+    GET_ALL_USERS,
+    CREATED_ROUTE,
+} from "./action-types";
 
 const initialState = {
     data: [],
@@ -10,7 +24,7 @@ const initialState = {
     province: [],
     companies: [],
     userGoogle: {},
-    terminales: []
+    terminales: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -18,7 +32,13 @@ const rootReducer = (state = initialState, action) => {
         case SEARCH_RESULTS:
             const { origin, destination, departureDate } = action.payload;
             const filter = state.trips.filter((trip) => {
-                return trip.origin.toLowerCase() === origin.toLowerCase() && trip.destination.toLowerCase() === destination.toLowerCase() && trip.departureDate.toLowerCase() === departureDate.toLowerCase();
+                return (
+                    trip.origin.toLowerCase() === origin.toLowerCase() &&
+                    trip.destination.toLowerCase() ===
+                        destination.toLowerCase() &&
+                    trip.departureDate.toLowerCase() ===
+                        departureDate.toLowerCase()
+                );
             });
 
             return {
@@ -29,32 +49,32 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userGoogle: action.payload,
-            }
+            };
         case GET_ALL_USERS:
             return {
                 ...state,
                 users: action.payload,
-            }
+            };
         case GET_CITIES:
             return {
                 ...state,
                 cities: action.payload,
-            }
+            };
         case GET_TERMINAL:
             return {
                 ...state,
                 terminales: action.payload,
-            }
+            };
         case GET_ALL_RUTES:
             return {
                 ...state,
                 trips: action.payload,
-            }
+            };
         case GET_PROVINCE:
             return {
                 ...state,
                 province: action.payload,
-            }
+            };
 
         case GET_ALL_COMPANIES:
             return {
