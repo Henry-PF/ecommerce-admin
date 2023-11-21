@@ -16,7 +16,7 @@ function Graficos(props) {
     const usersToMap = props.AllUsers;
     let totalUsers = 0;
 
-    const countAdmin = usersToMap.filter((user) => user.type !== "usuario");
+    const inactivos = usersToMap.filter((user) => user.statud.id !== 1);
 
     const countUsers = usersToMap.map(() => {
         return (totalUsers += 1);
@@ -29,13 +29,6 @@ function Graficos(props) {
         dispatch(deleteUsers(id));
         dispatch(getAllUsers());
         alert("usuario borrado");
-        if (id.id_status === 1) {
-            /* const dataToSend = { id: id.id }; */
-        } else {
-            /* const dataToSend = { id: id.id }; */
-            dispatch(deleteUsers(id));
-            dispatch(getAllUsers());
-        }
     };
 
     const handleClose = () => setShow(false);
@@ -225,11 +218,11 @@ function Graficos(props) {
                         <div className="container-fluid row">
                             <div className="col-lg-4 m-auto">
                                 {/* small card */}
-                                <div className="small-box bg-warning">
+                                <div className="small-box bg-info">
                                     <div className="inner">
                                         <h3>{totalUsers}</h3>
                                         <p className="fw-semibold">
-                                            User Registrations
+                                            Usuarios Registrados
                                         </p>
                                     </div>
                                     <div className="icon">
@@ -238,11 +231,11 @@ function Graficos(props) {
                                 </div>
                             </div>
                             <div className="col-lg-4 m-auto">
-                                <div className="small-box bg-info">
+                                <div className="small-box bg-danger">
                                     <div className="inner">
-                                        <h3>{countAdmin.length}</h3>
+                                        <h3>{inactivos.length}</h3>
                                         <p className="fw-semibold">
-                                            Admin Users
+                                            Usuarios inactivos
                                         </p>
                                     </div>
                                     <div className="icon">

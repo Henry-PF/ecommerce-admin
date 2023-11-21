@@ -91,7 +91,7 @@ export default function SideBar() {
                                             className="nav-link"
                                         >
                                             <i className="far fa-circle nav-icon" />
-                                            <p>Create</p>
+                                            <p>Crear nueva categoria</p>
                                         </Link>
                                     </li>
                                     <li className="nav-item">
@@ -100,7 +100,7 @@ export default function SideBar() {
                                             className="nav-link"
                                         >
                                             <i className="far fa-circle nav-icon" />
-                                            <p>Update-Delete</p>
+                                            <p>Lista de categorias</p>
                                         </Link>
                                     </li>
                                 </ul>
