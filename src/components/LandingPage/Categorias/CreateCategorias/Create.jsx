@@ -73,6 +73,7 @@ export default function Create() {
                                         className={styles.form_input}
                                         type="text"
                                         placeholder="Nombre"
+                                        required
                                         name="nombre"
                                         value={datos.dato?.nombre}
                                         onChange={(event) =>
