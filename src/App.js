@@ -1,11 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/LandingPage/Home/Home";
 import Login from "./components/Login/Login";
-/* Rutas Buses */
-import Create from "./components/LandingPage/Buses/CreateBuses/Create";
-import Delete from "./components/LandingPage/Buses/DeleteBuses/Delete";
-import Update from "./components/LandingPage/Buses/UpdateBuses/Update";
-import Read from "./components/LandingPage/Buses/ReadBuses/Read";
+/* Rutas Product */
+import Create from './components/LandingPage/Productos/CreateProduct/Create';
+import Update from './components/LandingPage/Productos/UpdateProduct/Update';
 /* Rutas Categorias */
 import CreateCategorias from "./components/LandingPage/Categorias/CreateCategorias/Create";
 import DeleteCategorias from "./components/LandingPage/Categorias/DeleteCategorias/Delete";
@@ -25,23 +23,9 @@ function App() {
             <Routes>
                 <Route exact path="/" element={<Login />} />
                 <Route element={<ProtectedRoutes />}>
-                    {/* Rutas Buses */}
-                    <Route
-                        exact
-                        path="/admin/buses/create"
-                        element={<Create />}
-                    />
-                    <Route
-                        exact
-                        path="/admin/buses/delete"
-                        element={<Delete />}
-                    />
-                    <Route
-                        exact
-                        path="/admin/buses/update"
-                        element={<Update />}
-                    />
-                    <Route exact path="/admin/buses/read" element={<Read />} />
+                              {/* Rutas Productos */}
+          <Route exact path='/admin/Productos/create' element={<Create />} />
+          <Route exact path='/admin/Productos/updateDelete' element={<Update />} />
                     {/* Rutas Categorias */}
                     <Route
                         exact

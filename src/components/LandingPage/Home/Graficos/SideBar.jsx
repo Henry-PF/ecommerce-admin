@@ -6,12 +6,12 @@ import { Link } from "react-router-dom";
 
 export default function SideBar() {
     // --------------------------------Lista de Buses---------------------------------------
-    const [Busesistrue, setBusesistrue] = React.useState(false);
-    const [BusesOpen, setBusesOpen] = React.useState("nav-item menu-open");
-    const [BusesClose, setBusesClose] = React.useState("nav-item");
+    const [ProductIsTrue, setProductIsTrue] = React.useState(false);
+    const [ProductOpen, setProductOpen] = React.useState("nav-item menu-open");
+    const [ProductClose, setProductClose] = React.useState("nav-item");
     const BusesHandle = () => {
-        return setBusesistrue(!Busesistrue);
-    };
+        return setProductIsTrue(!ProductIsTrue);
+    }
     // -----------------------------------------------------------------------
     // --------------------------------Lista de Empresas---------------------------------------
     const [Empresasistrue, setEmpresasistrue] = React.useState(false);
@@ -58,21 +58,34 @@ export default function SideBar() {
                 </Link>
                 <div className="sidebar">
                     <nav className="mt-2">
-                        <ul
-                            className="nav nav-pills nav-sidebar flex-column"
-                            data-widget="treeview"
-                            role="menu"
-                            data-accordion="false"
-                        >
-                            <li
-                                className={
-                                    Empresasistrue === true
-                                        ? EmpresasOpen
-                                        : EmpresasClose
-                                }
-                                onClick={() => EmpresasHandle()}
-                            >
-                                <Link to="#" className="nav-link">
+                        <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                            <li className={ProductIsTrue === true ? ProductOpen : ProductClose} onClick={() => BusesHandle()}>
+                                <a href="#" className="nav-link">
+                                    <i className="nav-icon fas fa-edit" />
+                                    <p>
+                                        Productos
+                                        <i className="fas fa-angle-left right" />
+                                    </p>
+                                </a>
+                                <ul className="nav nav-treeview">
+                                    <li className="nav-item">
+                                        <a href="/admin/Productos/updateDelete" className="nav-link">
+                                            <i className="far fa-circle nav-icon" />
+                                            <p>Editar-Eliminar Productos</p>
+                                        </a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a href="/admin/Productos/create" className="nav-link ">
+                                            <i className="far fa-circle nav-icon" />
+                                            <p>Agregar Producto</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                            <li className={Empresasistrue === true ? EmpresasOpen : EmpresasClose} onClick={() => EmpresasHandle()}>
+                                <a href="#" className="nav-link">
                                     <i className="nav-icon fas fa-edit" />
                                     <p>
                                         Categorias
