@@ -9,11 +9,7 @@ import CreateCategorias from "./components/LandingPage/Categorias/CreateCategori
 import DeleteCategorias from "./components/LandingPage/Categorias/DeleteCategorias/Delete";
 import UpdateCategorias from "./components/LandingPage/Categorias/UpdateCategorias/Update";
 import ReadCategorias from "./components/LandingPage/Categorias/ReadCategorias/Read";
-/* Rutas Rutas */
-import CreateRutas from "./components/LandingPage/Rutas/CreateRutas/Create";
-import DeleteRutas from "./components/LandingPage/Rutas/DeleteRutas/Delete";
-import UpdateRutas from "./components/LandingPage/Rutas/UpdateRutas/Update";
-import ReadRutas from "./components/LandingPage/Rutas/ReadRutas/Read";
+
 import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
 import "./App.css";
 
@@ -46,27 +42,6 @@ function App() {
                         exact
                         path="/admin/categorias/read"
                         element={<ReadCategorias />}
-                    />
-                    {/* Rutas Terminales */}
-                    <Route
-                        exact
-                        path="/admin/Rutas/create"
-                        element={<CreateRutas />}
-                    />
-                    <Route
-                        exact
-                        path="/admin/Rutas/delete"
-                        element={<DeleteRutas />}
-                    />
-                    <Route
-                        exact
-                        path="/admin/Rutas/update"
-                        element={<UpdateRutas />}
-                    />
-                    <Route
-                        exact
-                        path="/admin/Rutas/read"
-                        element={<ReadRutas />}
                     />
                     {/* Rutas Dashboard */}
                     <Route exact path="/admin/home" element={<Home />} />

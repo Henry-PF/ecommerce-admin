@@ -91,7 +91,7 @@ export default function SideBar() {
                                         Categorias
                                         <i className="fas fa-angle-left right" />
                                     </p>
-                                </Link>
+                                </a>
                                 <ul className="nav nav-treeview">
                                     <li className="nav-item">
                                         {/* <a
