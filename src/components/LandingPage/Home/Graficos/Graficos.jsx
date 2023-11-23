@@ -26,9 +26,38 @@ function Graficos(props) {
     const [selectedUser, setSelectedUser] = React.useState({});
 
     const deleteOnClick = (id) => {
-        dispatch(deleteUsers(id));
-        dispatch(getAllUsers());
-        alert("usuario borrado");
+        const selectedUser = usersToMap?.find((user) => user.id === id);
+        const estado = selectedUser.statud.id !== 1 ? 1 : 2;
+        const idUser = {
+            id: id,
+            id_status: estado,
+        };
+        try {
+            Swal.fire({
+                title: "Esta Seguro?",
+                text: `${estado !== 1 ? "Desactivar" : "Activar"} a ${
+                    selectedUser.usuario
+                }`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(deleteUsers(idUser));
+                    /* dispatch(getAllUsers()); */
+                    Swal.fire(
+                        `Usuario ${estado !== 1 ? "desactivado" : "activado"}!`,
+                        "success"
+                    ).then(() => {
+                        window.location.reload();
+                    });
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const handleClose = () => setShow(false);
@@ -40,7 +69,6 @@ function Graficos(props) {
         });
     };
     const handleSaveChange = async () => {
-        console.log(selectedUser);
         try {
             const data = await axios.post(
                 "http://localhost:3002/api/usuarios/update",
@@ -67,7 +95,6 @@ function Graficos(props) {
     const updateOnClick = (ruteId) => {
         const selectedUser = usersToMap?.find((ruta) => ruta.id === ruteId);
         setSelectedUser(selectedUser);
-        console.log(selectedUser);
         setShow(true);
     };
 
@@ -96,7 +123,7 @@ function Graficos(props) {
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
                             <Modal.Title>
-                                Modificar {selectedUser.usuario}
+                                Info de {selectedUser.usuario}
                             </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
@@ -109,12 +136,9 @@ function Graficos(props) {
                                     <Form.Control
                                         className={styles.form_input}
                                         type="text"
-                                        /* placeholder="Nombre" */
+                                        placeholder="Nombre"
                                         name="nombre"
-                                        value={selectedUser.nombre}
-                                        placeholder={
-                                            selectedUser?.persona?.nombre
-                                        }
+                                        value={selectedUser?.persona?.nombre}
                                         onChange={(event) =>
                                             handleChange(event)
                                         }
@@ -129,12 +153,9 @@ function Graficos(props) {
                                     <Form.Control
                                         className={styles.form_input}
                                         type="text"
-                                        /* placeholder="Apellido" */
+                                        placeholder="Apellido"
                                         name="apellido"
-                                        value={selectedUser.apellido}
-                                        placeholder={
-                                            selectedUser?.persona?.apellido
-                                        }
+                                        value={selectedUser?.persona?.apellido}
                                         onChange={(event) =>
                                             handleChange(event)
                                         }
@@ -150,12 +171,9 @@ function Graficos(props) {
                                     <Form.Control
                                         className={styles.form_input}
                                         type="text"
-                                        /* placeholder="Telefono" */
+                                        placeholder="Telefono"
                                         name="telefono"
-                                        value={selectedUser.telefono}
-                                        placeholder={
-                                            selectedUser?.persona?.telefono
-                                        }
+                                        value={selectedUser?.persona?.telefono}
                                         onChange={(event) =>
                                             handleChange(event)
                                         }
@@ -170,12 +188,9 @@ function Graficos(props) {
                                     <Form.Control
                                         className={styles.form_input}
                                         type="text"
-                                        /* placeholder="direccion" */
+                                        placeholder="direccion"
                                         name="direccion"
-                                        value={selectedUser.direccion}
-                                        placeholder={
-                                            selectedUser?.persona?.direccion
-                                        }
+                                        value={selectedUser?.persona?.direccion}
                                         onChange={(event) =>
                                             handleChange(event)
                                         }
@@ -190,10 +205,9 @@ function Graficos(props) {
                                     <Form.Control
                                         className={styles.form_input}
                                         type="text"
-                                        /* placeholder="dni" */
+                                        placeholder="dni"
                                         name="dni"
-                                        value={selectedUser.dni}
-                                        placeholder={selectedUser?.persona?.dni}
+                                        value={selectedUser?.persona?.dni}
                                         onChange={(event) =>
                                             handleChange(event)
                                         }
@@ -267,7 +281,7 @@ function Graficos(props) {
                                                             <th>Usuario</th>
                                                             <th>Estado</th>
                                                             <th>Rango</th>
-                                                            <th>Edit</th>
+                                                            <th>Info</th>
                                                             <th>Delete</th>
                                                         </tr>
                                                     </thead>

@@ -403,9 +403,9 @@ export default function Update() {
                                                                                 }
                                                                             >
                                                                                 <BsTrash
-                                                                                    className={
-                                                                                        styles.btn_icon
-                                                                                    }
+                                                                                    style={{
+                                                                                        color: "#dd3636",
+                                                                                    }}
                                                                                 />
                                                                             </button>
                                                                         ) : (
@@ -420,9 +420,9 @@ export default function Update() {
                                                                                 }
                                                                             >
                                                                                 <BsCheckLg
-                                                                                    className={
-                                                                                        styles.btn_icon
-                                                                                    }
+                                                                                    style={{
+                                                                                        color: "blue",
+                                                                                    }}
                                                                                 />
                                                                             </button>
                                                                         )}
