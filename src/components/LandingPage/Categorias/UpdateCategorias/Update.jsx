@@ -80,6 +80,10 @@ export default function Update() {
         const selectedCompany = companies.data?.find(
             (company) => company.id === id
         );
+        const idCategoria = {
+            id: selectedCompany.id,
+            id_statud: 2,
+        };
         console.log(selectedCompany);
         try {
             Swal.fire({
@@ -94,7 +98,7 @@ export default function Update() {
                 if (result.isConfirmed) {
                     const { data } = axios.post(
                         `http://localhost:3002/api/categorias/delete`,
-                        selectedCompany
+                        idCategoria
                     );
                     Swal.fire("Categoria inavilitada!", "success").then(() => {
                         window.location.reload();
@@ -110,7 +114,11 @@ export default function Update() {
         const selectedCompany = companies.data?.find(
             (company) => company.id === id
         );
-        console.log(selectedCompany);
+
+        const idCategoria = {
+            id: selectedCompany.id,
+            id_statud: 1,
+        };
         try {
             Swal.fire({
                 title: "Esta seguro?",
@@ -123,8 +131,8 @@ export default function Update() {
             }).then((result) => {
                 if (result.isConfirmed) {
                     const { data } = axios.post(
-                        `http://localhost:3002/api/categorias/active`,
-                        selectedCompany
+                        `http://localhost:3002/api/categorias/delete`,
+                        idCategoria
                     );
                     Swal.fire("Categoria habilitada!", "success").then(() => {
                         window.location.reload();
