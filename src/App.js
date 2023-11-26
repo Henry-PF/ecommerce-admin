@@ -4,6 +4,8 @@ import Login from "./components/Login/Login";
 /* Rutas Product */
 import Create from './components/LandingPage/Productos/CreateProduct/Create';
 import Update from './components/LandingPage/Productos/UpdateProduct/Update';
+/* Rutas Facturas */
+import ReadFacturas from "./components/LandingPage/Facturas/ReadFacturas/ReadFacturas"; 
 /* Rutas Categorias */
 import CreateCategorias from "./components/LandingPage/Categorias/CreateCategorias/Create";
 import DeleteCategorias from "./components/LandingPage/Categorias/DeleteCategorias/Delete";
@@ -19,9 +21,11 @@ function App() {
             <Routes>
                 <Route exact path="/" element={<Login />} />
                 <Route element={<ProtectedRoutes />}>
-                              {/* Rutas Productos */}
-          <Route exact path='/admin/Productos/create' element={<Create />} />
-          <Route exact path='/admin/Productos/updateDelete' element={<Update />} />
+                    {/* Rutas Productos */}
+                    <Route exact path='/admin/Productos/create' element={<Create />} />
+                    <Route exact path='/admin/Productos/updateDelete' element={<Update />} />
+                    {/* Rutas Facturas */}
+                    <Route exact path='/admin/facturas/updateDelete' element={<ReadFacturas/>} />
                     {/* Rutas Categorias */}
                     <Route
                         exact

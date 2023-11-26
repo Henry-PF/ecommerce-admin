@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import SideBar from "../../Home/Graficos/SideBar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Update.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";

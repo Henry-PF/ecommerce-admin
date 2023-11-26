@@ -30,6 +30,14 @@ export default function SideBar() {
         return setRutasistrue(!Rutasistrue);
     };
     // -----------------------------------------------------------------------
+    // --------------------------------Lista de Fcatuas---------------------------------------
+    const [Facturasistrue, setFacturasistrue] = React.useState(false);
+    const [FacturasOpen, setFacturasOpen] = React.useState("nav-item menu-open");
+    const [FacturasClose, setFacturasClose] = React.useState("nav-item");
+    const FacturasHandle = () => {
+        return setFacturasistrue(!Facturasistrue);
+    };
+    // -----------------------------------------------------------------------
 
     const handleClick = () => {
         localStorage.clear();
@@ -114,6 +122,33 @@ export default function SideBar() {
                                         >
                                             <i className="far fa-circle nav-icon" />
                                             <p>Lista de categorias</p>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                            <li className={Facturasistrue === true ? FacturasOpen : FacturasClose} onClick={() => FacturasHandle()}>
+                                <a href="#" className="nav-link">
+                                    <i className="nav-icon fas fa-edit" />
+                                    <p>
+                                        Facturas
+                                        <i className="fas fa-angle-left right" />
+                                    </p>
+                                </a>
+                                <ul className="nav nav-treeview">
+                                    <li className="nav-item">
+                                        {/* <a
+                                            href="/admin/categorias/create"
+                                            className="nav-link "
+                                        >
+                                        </a> */}
+                                        <Link
+                                            to="/admin/facturas/updateDelete"
+                                            className="nav-link"
+                                        >
+                                            <i className="far fa-circle nav-icon" />
+                                            <p>Ver Facturas</p>
                                         </Link>
                                     </li>
                                 </ul>

@@ -12,6 +12,8 @@ import {
     GET_ALL_COMPANIES,
     GET_ALL_USERS,
     CREATED_ROUTE,
+    GET_FACTURAS_MAP,
+    GET_ALL_FACTURAS
 } from "./action-types";
 
 const initialState = {
@@ -25,6 +27,8 @@ const initialState = {
     companies: [],
     userGoogle: {},
     terminales: [],
+    beneficios: [],
+    facturas: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -49,6 +53,16 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userGoogle: action.payload,
+            };
+        case GET_FACTURAS_MAP:
+            return {
+                ...state,
+                beneficios: action.payload,
+            };
+        case GET_ALL_FACTURAS:
+            return {
+                ...state,
+                facturas: action.payload,
             };
         case GET_ALL_USERS:
             return {
