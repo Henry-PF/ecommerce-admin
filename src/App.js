@@ -19,6 +19,8 @@ import ReadRutas from './components/LandingPage/Rutas/ReadRutas/Read';
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes';
 import './App.css';
 
+import SearchBar from './components/LandingPage/Usuarios/Searchbar';
+
 function App() {
   return (
     <div className="App">
@@ -42,6 +44,8 @@ function App() {
           <Route exact path='/admin/Rutas/read' element={<ReadRutas />} />
           {/* Rutas Dashboard */}
           <Route exact path='/admin/home' element={<Home />} />
+          {/* Rutas Searchbar */}
+          <Route exact path= "/searchBar/:name" element = {SearchBar} />
         </Route>
       </Routes>
     </div>
