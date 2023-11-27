@@ -1,6 +1,6 @@
 import {
-    GET_CITIES,
-    GET_PROVINCE,
+    FILTER_INACTIVE_USERS,
+    GET_REVIEWS,
     SEARCH_RESULTS,
     USER_LOGIN,
     GET_TERMINAL,
@@ -12,16 +12,18 @@ import {
     GET_ALL_COMPANIES,
     GET_ALL_USERS,
     CREATED_ROUTE,
+    GET_SEARCH_DATA,
+    GET_SEARCH_CATEGORY,
 } from "./action-types";
 
 const initialState = {
     data: [],
     products: [],
-    categories: {},
+    categories: [],
     users: [],
     trips: [],
-    cities: [],
-    province: [],
+    inactiveUsers: [],
+    reviews: [],
     companies: [],
     userGoogle: {},
     terminales: [],
@@ -53,12 +55,11 @@ const rootReducer = (state = initialState, action) => {
         case GET_ALL_USERS:
             return {
                 ...state,
+                data: action.payload,
                 users: action.payload,
-            };
-        case GET_CITIES:
-            return {
-                ...state,
-                cities: action.payload,
+                inactiveUsers: action.payload.filter(
+                    (user) => user.statud.id !== 1
+                ),
             };
         case GET_TERMINAL:
             return {
@@ -70,32 +71,47 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 trips: action.payload,
             };
-        case GET_PROVINCE:
+        case GET_REVIEWS:
             return {
                 ...state,
-                province: action.payload,
+                reviews: action.payload,
             };
 
         case GET_ALL_COMPANIES:
             return {
                 ...state,
                 companies: action.payload,
-            }
+                categories: action.payload,
+            };
         case GET_PRODUCTOS:
             return {
                 ...state,
                 products: action.payload,
-            }
+            };
         case CREATED_ROUTE:
             return {
                 ...state,
-                route: action.payload
-            }
+                route: action.payload,
+            };
         case GET_ALL_CATEGORIES:
             return {
                 ...state,
                 categories: action.payload,
-            }
+            };
+        case GET_SEARCH_DATA:
+            return {
+                ...state,
+                data: state.users.filter((user) =>
+                    user.usuario.includes(action.payload)
+                ),
+            };
+        case GET_SEARCH_CATEGORY:
+            return {
+                ...state,
+                categories: state.companies.data.filter((categoria) =>
+                    categoria.nombre.includes(action.payload)
+                ),
+            };
         default:
             return state;
     }

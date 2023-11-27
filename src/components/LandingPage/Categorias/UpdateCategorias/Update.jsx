@@ -19,6 +19,8 @@ import {
     BsArrowLeft,
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import Busqueda from "../../../Busqueda/Busqueda";
+import { searchCategory } from "../../../../Redux/actions";
 
 export default function Update() {
     const [show, setShow] = useState(false);
@@ -27,6 +29,7 @@ export default function Update() {
 
     const dispatch = useDispatch();
     const companies = useSelector((state) => state.companies);
+    const categories = useSelector((state) => state.categories);
 
     const handleClose = () => setShow(false);
 
@@ -144,15 +147,15 @@ export default function Update() {
         }
     };
 
-    const itemsPerPage = 10;
+    const itemsPerPage = 8;
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
 
-    const visiblecompanies = companies.data?.slice(startIndex, endIndex);
-
+    //const visiblecompanies = companies.data?.slice(startIndex, endIndex);
+    const visiblecompanies = categories.data?.slice(startIndex, endIndex);
     const renderPageButtons = () => {
         const totalPages = Math.ceil(
-            (companies.data?.length || 0) / itemsPerPage
+            (categories.data?.length || 0) / itemsPerPage
         );
 
         const buttons = [];
@@ -178,7 +181,7 @@ export default function Update() {
     useEffect(() => {
         dispatch(getAllCategories());
     }, [dispatch, show]);
-    console.log(selectedCompany);
+
     return (
         <div className="wrapper">
             {/* Main Sidebar Container */}
@@ -247,48 +250,55 @@ export default function Update() {
                                 <div className="card">
                                     <div className="card-header">
                                         <div className="card-body">
-                                            <div className="pagination mb-1">
-                                                <button
-                                                    className={
-                                                        styles.btn_pagination
-                                                    }
-                                                    onClick={() =>
-                                                        handlePageChange(
-                                                            currentPage - 1
-                                                        )
-                                                    }
-                                                    disabled={currentPage === 1}
-                                                >
-                                                    <BsArrowLeft
+                                            <div className="d-flex justify-content-between py-2">
+                                                <div className="pagination mb-1">
+                                                    <button
                                                         className={
-                                                            styles.btn_icon
+                                                            styles.btn_pagination
                                                         }
-                                                    />
-                                                </button>
+                                                        onClick={() =>
+                                                            handlePageChange(
+                                                                currentPage - 1
+                                                            )
+                                                        }
+                                                        disabled={
+                                                            currentPage === 1
+                                                        }
+                                                    >
+                                                        <BsArrowLeft
+                                                            className={
+                                                                styles.btn_icon
+                                                            }
+                                                        />
+                                                    </button>
 
-                                                {renderPageButtons()}
+                                                    {renderPageButtons()}
 
-                                                <button
-                                                    className={
-                                                        styles.btn_pagination
-                                                    }
-                                                    onClick={() =>
-                                                        handlePageChange(
-                                                            currentPage + 1
-                                                        )
-                                                    }
-                                                    disabled={
-                                                        endIndex >=
-                                                        (companies.data
-                                                            ?.length || 0)
-                                                    }
-                                                >
-                                                    <BsArrowRight
+                                                    <button
                                                         className={
-                                                            styles.btn_icon
+                                                            styles.btn_pagination
                                                         }
-                                                    />
-                                                </button>
+                                                        onClick={() =>
+                                                            handlePageChange(
+                                                                currentPage + 1
+                                                            )
+                                                        }
+                                                        disabled={
+                                                            endIndex >=
+                                                            (companies.data
+                                                                ?.length || 0)
+                                                        }
+                                                    >
+                                                        <BsArrowRight
+                                                            className={
+                                                                styles.btn_icon
+                                                            }
+                                                        />
+                                                    </button>
+                                                </div>
+                                                <Busqueda
+                                                    despachar={searchCategory}
+                                                ></Busqueda>
                                             </div>
                                             <Table bordered hover>
                                                 <thead>

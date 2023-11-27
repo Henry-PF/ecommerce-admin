@@ -185,7 +185,7 @@ export default function Update() {
         <section className="content-header">
           <div className="container-fluid">
             
-                <h1 className='text-center'>Modificar Productos</h1>
+                <h1 className='text-center'>Lista de Productos</h1>
               
           </div>
         </section>
