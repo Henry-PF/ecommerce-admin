@@ -1,6 +1,10 @@
-.divContenido{
+.divContenido {
 }
-.button{
+.button {
     border: none;
     background: transparent;
+}
+.btn_active {
+    background-color: #716f6f;
+    color: #fff;
 }
