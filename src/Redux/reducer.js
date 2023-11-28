@@ -102,14 +102,18 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 data: state.users.filter((user) =>
-                    user.usuario.includes(action.payload)
+                    user.usuario
+                        .toLowerCase()
+                        .includes(action.payload.toLowerCase())
                 ),
             };
         case GET_SEARCH_CATEGORY:
             return {
                 ...state,
-                categories: state.companies.data.filter((categoria) =>
-                    categoria.nombre.includes(action.payload)
+                categories: state.companies.filter((categoria) =>
+                    categoria.nombre
+                        .toLowerCase()
+                        .includes(action.payload.toLowerCase())
                 ),
             };
         default:

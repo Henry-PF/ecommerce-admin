@@ -100,7 +100,7 @@ export const getAllCategories = () => {
 
             dispatch({
                 type: GET_ALL_COMPANIES,
-                payload: data,
+                payload: data.data,
             });
         } catch (error) {
             console.log(error);

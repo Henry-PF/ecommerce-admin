@@ -151,12 +151,10 @@ export default function Update() {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
 
-    //const visiblecompanies = companies.data?.slice(startIndex, endIndex);
-    const visiblecompanies = categories.data?.slice(startIndex, endIndex);
+    //const visiblecompanies = companies?.slice(startIndex, endIndex);
+    const visiblecompanies = categories?.slice(startIndex, endIndex);
     const renderPageButtons = () => {
-        const totalPages = Math.ceil(
-            (categories.data?.length || 0) / itemsPerPage
-        );
+        const totalPages = Math.ceil((categories?.length || 0) / itemsPerPage);
 
         const buttons = [];
         for (let page = 1; page <= totalPages; page++) {
@@ -177,7 +175,7 @@ export default function Update() {
 
         return buttons;
     };
-
+    console.log("categorias:", categories);
     useEffect(() => {
         dispatch(getAllCategories());
     }, [dispatch, show]);
@@ -285,8 +283,8 @@ export default function Update() {
                                                         }
                                                         disabled={
                                                             endIndex >=
-                                                            (companies.data
-                                                                ?.length || 0)
+                                                            (companies?.length ||
+                                                                0)
                                                         }
                                                     >
                                                         <BsArrowRight
