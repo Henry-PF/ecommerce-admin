@@ -27,7 +27,7 @@ const LoginPage = (props) => {
         const { email, password } = userData;
 
         try {
-            const { data } = await axios.post("http://localhost:3002/api/auth/login", {
+            const { data } = await axios.post(`${url}/auth/login`, {
                 correo: email,
                 password: password,
             });

@@ -16,6 +16,7 @@ import {
     BsArrowLeft,
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
+const url = process.env.BACKEND_URL;
 
 export default function Update() {
     const [show, setShow] = useState(false);
@@ -52,7 +53,7 @@ export default function Update() {
     const handleSaveChanges = async () => {
         try {
             const data = await axios.post(
-                "http://localhost:3002/api/categorias/update",
+                `${url}/categorias/update`,
                 selectedCompany
             );
             console.log(data);
@@ -90,7 +91,7 @@ export default function Update() {
             }).then((result) => {
                 if (result.isConfirmed) {
                     const { data } = axios.post(
-                        `http://localhost:3002/api/categorias/delete`,
+                        `${url}/categorias/delete`,
                         selectedCompany
                     );
                     Swal.fire("Categoria inavilitada!", "success").then(() => {
@@ -120,7 +121,7 @@ export default function Update() {
             }).then((result) => {
                 if (result.isConfirmed) {
                     const { data } = axios.post(
-                        `http://localhost:3002/api/categorias/active`,
+                        `${url}/categorias/active`,
                         selectedCompany
                     );
                     Swal.fire("Categoria habilitada!", "success").then(() => {

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styles from "./ReadFacturas.module.css";
 import { useDispatch, useSelector } from 'react-redux';
-import { BsArrowRight, BsArrowLeft } from 'react-icons/bs';
 import Table from 'react-bootstrap/Table';
 import SideBar from '../../Home/Graficos/SideBar';
 import { getAllFacturas, getFacturasMap } from '../../../../Redux/actions';
 import GraficosFactura from '../GraficosFactura/GraficosFactura';
-
+import { BsPencilSquare, BsArrowRight, BsArrowLeft } from 'react-icons/bs';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 
 export default function ReadFacturas() {
@@ -23,9 +24,25 @@ export default function ReadFacturas() {
   const endIndex = startIndex + itemsPerPage;
 
   const visibleProduct = facturas?.slice(startIndex, endIndex);
-  
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
+  };
+
+  const handleClickEdit = (busId) => {
+    const Selectedfacturas = facturas?.find((bus) => bus.id === busId);
+    console.log(Selectedfacturas);
+    setSelectedfacturas(Selectedfacturas);
+    setShow(true);
+  };
+
+  const handleClose = () => setShow(false);
+
+  const handleChange = (event) => {
+    setSelectedfacturas({
+      ...Selectedfacturas,
+      [event.target.name]: event.target.value,
+    })
   };
 
   const renderPageButtons = () => {
@@ -49,8 +66,8 @@ export default function ReadFacturas() {
 
 
   useEffect(() => {
-      dispatch(getAllFacturas())
-      dispatch(getFacturasMap())
+    dispatch(getAllFacturas())
+    dispatch(getFacturasMap())
   }, [dispatch, show]);
 
   return (
@@ -69,6 +86,40 @@ export default function ReadFacturas() {
             </div>
           </div>
         </section>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modificar Producto</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form action="" className={styles.form}>
+              <div className={styles.input}>
+                <label>Producto Comprado: </label>
+                <h5>{Selectedfacturas.factura_detalles[0].producto.descripcion? Selectedfacturas.factura_detalles[0].producto.descripcion : "No existe"}</h5>
+                <label>Cantidad: </label>
+                <h5>{Selectedfacturas.factura_detalles[0].cantidad? Selectedfacturas.factura_detalles[0].cantidad : "No existe"}</h5>
+                <label>id_factura: </label>
+                <h5>{Selectedfacturas.factura_detalles[0].id_factura? Selectedfacturas.factura_detalles[0].id_factura: "No existe"}</h5>
+                <label>id_producto: </label>
+                <h5>{Selectedfacturas.factura_detalles[0].id_producto? Selectedfacturas.factura_detalles[0].id_producto : "No existe"}</h5>
+                <label>Nombre del producto: </label>
+                <h5>{Selectedfacturas.factura_detalles[0].producto.nombre? Selectedfacturas.factura_detalles[0].producto.nombre: "No existe"}</h5>
+                <label>Precio: </label>
+                <h5>{Selectedfacturas.factura_detalles[0].producto.precio? Selectedfacturas.factura_detalles[0].producto.precio: "No existe"}</h5>
+                <label>Stock del producto: </label>
+                <h5>{Selectedfacturas.factura_detalles[0].producto.stock? Selectedfacturas.factura_detalles[0].producto.stock : "No existe"}</h5>
+                <label>Nombre del usuario: </label>
+                <h5>{Selectedfacturas.factura_detalles[0].usuario? Selectedfacturas.factura_detalles[0].usuario : "No se registro el usuario: Null"}</h5>
+                <label>ID del usuario: </label>
+                <h5>{Selectedfacturas.factura_detalles[0].id_usuario? Selectedfacturas.factura_detalles[0].id_usuario : "No se registro el usuario: Null"}</h5>
+              </div>
+            </form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Cerrar
+            </Button>
+          </Modal.Footer>
+        </Modal>
         {/* /.content */}
         <section className="content">
           <div className="container-fluid">
@@ -114,13 +165,18 @@ export default function ReadFacturas() {
                               <td className={styles.td}>{producto.factura_detalles[0].cantidad}</td>
                               <td className={styles.td}>{producto.factura_detalles[0].producto.nombre}</td>
                               <td className={styles.td}>{producto.factura_detalles[0].producto.id}</td>
+                              <td className={styles.td}>
+                                <button className={styles.button} onClick={() => handleClickEdit(producto.id)} >
+                                  <BsPencilSquare className={styles.btn_icon} />
+                                </button>
+                              </td>
                             </tr>
                           </tbody>
                         })}
                       </Table>
                       <div className={styles.divGrafico}>
                         <h1>Grafico de Compras en el año</h1>
-                      <GraficosFactura/>
+                        <GraficosFactura />
                       </div>
                     </div>
                   </div>

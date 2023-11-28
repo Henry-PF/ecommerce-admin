@@ -30,8 +30,6 @@ export default function GraficosFactura() {
     const dispatch = useDispatch();
     const beneficios = useSelector(state => state.beneficios);
 
-    console.log(beneficios);
-
     const meses = ["Enero", "Febrero", "Marzi", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
    
