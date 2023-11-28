@@ -9,7 +9,11 @@ import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import {Link} from 'react-router-dom'
+
 const url = process.env.BACKEND_URL;
+
+
 
 export default function Update() {
 
@@ -169,14 +173,22 @@ export default function Update() {
       <SideBar></SideBar>
       {/* Content Wrapper. Contains page content */}
       <div className="content-wrapper">
+      <section className="content-header">
+                    <div className={styles.botonBack}>
+                        <Link
+                            to="/admin/home"
+                            className="btn btn-outline-secondary"
+                        >
+                            Volver
+                        </Link>
+                    </div>
+                </section>
         {/* Content Header (Page header) */}
         <section className="content-header">
           <div className="container-fluid">
-            <div className="row mb-2">
-              <div className="col-sm-6">
-                <h1 className=''>Modificar Productos</h1>
-              </div>
-            </div>
+            
+                <h1 className='text-center'>Lista de Productos</h1>
+              
           </div>
         </section>
 

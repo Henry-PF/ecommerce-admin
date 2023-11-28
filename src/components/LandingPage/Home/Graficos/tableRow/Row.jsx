@@ -1,6 +1,6 @@
 import styles from "../Graficos.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 const Row = ({ usuario, deleteOnClick, updateOnClick }) => {
     return (
@@ -16,7 +16,7 @@ const Row = ({ usuario, deleteOnClick, updateOnClick }) => {
                     onClick={() => updateOnClick(usuario.id)}
                 >
                     <FontAwesomeIcon
-                        icon={faPencil}
+                        icon={faBookOpen}
                         style={{
                             color: "#a1a1a1cc",
                         }}
@@ -27,15 +27,15 @@ const Row = ({ usuario, deleteOnClick, updateOnClick }) => {
                 <button
                     className={styles.button}
                     onClick={() => {
-                        const idUser = {
-                            id: usuario.id,
-                            id_status: 2,
-                        };
-                        return deleteOnClick(idUser);
+                        return deleteOnClick(usuario.id);
                     }}
                 >
                     <FontAwesomeIcon
-                        icon={faTrash}
+                        icon={
+                            usuario.statud.nombre === "ACTIVO"
+                                ? faTrash
+                                : faCheck
+                        }
                         style={{
                             color: "#dd3636",
                         }}

@@ -11,7 +11,7 @@ export default function SideBar() {
     const [ProductClose, setProductClose] = React.useState("nav-item");
     const BusesHandle = () => {
         return setProductIsTrue(!ProductIsTrue);
-    }
+    };
     // -----------------------------------------------------------------------
     // --------------------------------Lista de Empresas---------------------------------------
     const [Empresasistrue, setEmpresasistrue] = React.useState(false);
@@ -22,7 +22,7 @@ export default function SideBar() {
         return setEmpresasistrue(!Empresasistrue);
     };
     // -----------------------------------------------------------------------
-    // --------------------------------Lista de Rutas---------------------------------------
+    // --------------------------------Lista de Reviews---------------------------------------
     const [Rutasistrue, setRutasistrue] = React.useState(false);
     const [RutasOpen, setRutasOpen] = React.useState("nav-item menu-open");
     const [RutasClose, setRutasClose] = React.useState("nav-item");
@@ -66,8 +66,20 @@ export default function SideBar() {
                 </Link>
                 <div className="sidebar">
                     <nav className="mt-2">
-                        <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            <li className={ProductIsTrue === true ? ProductOpen : ProductClose} onClick={() => BusesHandle()}>
+                        <ul
+                            className="nav nav-pills nav-sidebar flex-column"
+                            data-widget="treeview"
+                            role="menu"
+                            data-accordion="false"
+                        >
+                            <li
+                                className={
+                                    ProductIsTrue === true
+                                        ? ProductOpen
+                                        : ProductClose
+                                }
+                                onClick={() => BusesHandle()}
+                            >
                                 <a href="#" className="nav-link">
                                     <i className="nav-icon fas fa-edit" />
                                     <p>
@@ -77,22 +89,40 @@ export default function SideBar() {
                                 </a>
                                 <ul className="nav nav-treeview">
                                     <li className="nav-item">
-                                        <a href="/admin/Productos/updateDelete" className="nav-link">
+                                        <Link
+                                            to="/admin/Productos/updateDelete"
+                                            className="nav-link"
+                                        >
                                             <i className="far fa-circle nav-icon" />
-                                            <p>Editar-Eliminar Productos</p>
-                                        </a>
+                                            <p>Lista de productos</p>
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="/admin/Productos/create" className="nav-link ">
+                                        <Link
+                                            to="/admin/Productos/create"
+                                            className="nav-link "
+                                        >
                                             <i className="far fa-circle nav-icon" />
                                             <p>Agregar Producto</p>
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </li>
                         </ul>
-                        <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            <li className={Empresasistrue === true ? EmpresasOpen : EmpresasClose} onClick={() => EmpresasHandle()}>
+                        <ul
+                            className="nav nav-pills nav-sidebar flex-column"
+                            data-widget="treeview"
+                            role="menu"
+                            data-accordion="false"
+                        >
+                            <li
+                                className={
+                                    Empresasistrue === true
+                                        ? EmpresasOpen
+                                        : EmpresasClose
+                                }
+                                onClick={() => EmpresasHandle()}
+                            >
                                 <a href="#" className="nav-link">
                                     <i className="nav-icon fas fa-edit" />
                                     <p>
@@ -102,20 +132,6 @@ export default function SideBar() {
                                 </a>
                                 <ul className="nav nav-treeview">
                                     <li className="nav-item">
-                                        {/* <a
-                                            href="/admin/categorias/create"
-                                            className="nav-link "
-                                        >
-                                        </a> */}
-                                        <Link
-                                            to="/admin/categorias/create"
-                                            className="nav-link"
-                                        >
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Crear nueva categoria</p>
-                                        </Link>
-                                    </li>
-                                    <li className="nav-item">
                                         <Link
                                             to="/admin/categorias/update"
                                             className="nav-link"
@@ -124,6 +140,58 @@ export default function SideBar() {
                                             <p>Lista de categorias</p>
                                         </Link>
                                     </li>
+                                    <li className="nav-item">
+                                        <Link
+                                            to="/admin/categorias/create"
+                                            className="nav-link"
+                                        >
+                                            <i className="far fa-circle nav-icon" />
+                                            <p>Crear nueva categoria</p>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul
+                            className="nav nav-pills nav-sidebar flex-column"
+                            data-widget="treeview"
+                            role="menu"
+                            data-accordion="false"
+                        >
+                            <li
+                                className={
+                                    Rutasistrue === true
+                                        ? RutasOpen
+                                        : RutasClose
+                                }
+                                onClick={() => RutasHandle()}
+                            >
+                                <a href="#" className="nav-link">
+                                    <i className="nav-icon fas fa-edit" />
+                                    <p>
+                                        Reviews
+                                        <i className="fas fa-angle-left right" />
+                                    </p>
+                                </a>
+                                <ul className="nav nav-treeview">
+                                    <li className="nav-item">
+                                        <Link
+                                            to="/admin/reviews/view"
+                                            className="nav-link"
+                                        >
+                                            <i className="far fa-circle nav-icon" />
+                                            <p>Lista de reviews</p>
+                                        </Link>
+                                    </li>
+                                    {/* <li className="nav-item">
+                                        <Link
+                                            to="/admin/categorias/create"
+                                            className="nav-link"
+                                        >
+                                            <i className="far fa-circle nav-icon" />
+                                            <p>Crear nueva categoria</p>
+                                        </Link>
+                                    </li> */}
                                 </ul>
                             </li>
                         </ul>

@@ -4,7 +4,7 @@ import styles from "./Update.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { getAllCategories } from "../../../../Redux/actions";
+import { getAllCategories, searchCategory } from "../../../../Redux/actions";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
@@ -16,7 +16,9 @@ import {
     BsArrowLeft,
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
+
 const url = process.env.BACKEND_URL;
+import Busqueda from "../../../Busqueda/Busqueda";
 
 export default function Update() {
     const [show, setShow] = useState(false);
@@ -25,6 +27,7 @@ export default function Update() {
 
     const dispatch = useDispatch();
     const companies = useSelector((state) => state.companies);
+    const categories = useSelector((state) => state.categories);
 
     const handleClose = () => setShow(false);
 
@@ -78,6 +81,10 @@ export default function Update() {
         const selectedCompany = companies.data?.find(
             (company) => company.id === id
         );
+        const idCategoria = {
+            id: selectedCompany.id,
+            id_statud: 2,
+        };
         console.log(selectedCompany);
         try {
             Swal.fire({
@@ -92,7 +99,7 @@ export default function Update() {
                 if (result.isConfirmed) {
                     const { data } = axios.post(
                         `${url}/categorias/delete`,
-                        selectedCompany
+                        idCategoria
                     );
                     Swal.fire("Categoria inavilitada!", "success").then(() => {
                         window.location.reload();
@@ -108,7 +115,11 @@ export default function Update() {
         const selectedCompany = companies.data?.find(
             (company) => company.id === id
         );
-        console.log(selectedCompany);
+
+        const idCategoria = {
+            id: selectedCompany.id,
+            id_statud: 1,
+        };
         try {
             Swal.fire({
                 title: "Esta seguro?",
@@ -122,7 +133,7 @@ export default function Update() {
                 if (result.isConfirmed) {
                     const { data } = axios.post(
                         `${url}/categorias/active`,
-                        selectedCompany
+                        idCategoria
                     );
                     Swal.fire("Categoria habilitada!", "success").then(() => {
                         window.location.reload();
@@ -134,16 +145,14 @@ export default function Update() {
         }
     };
 
-    const itemsPerPage = 10;
+    const itemsPerPage = 8;
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
 
-    const visiblecompanies = companies.data?.slice(startIndex, endIndex);
-
+    //const visiblecompanies = companies?.slice(startIndex, endIndex);
+    const visiblecompanies = categories?.slice(startIndex, endIndex);
     const renderPageButtons = () => {
-        const totalPages = Math.ceil(
-            (companies.data?.length || 0) / itemsPerPage
-        );
+        const totalPages = Math.ceil((categories?.length || 0) / itemsPerPage);
 
         const buttons = [];
         for (let page = 1; page <= totalPages; page++) {
@@ -164,11 +173,11 @@ export default function Update() {
 
         return buttons;
     };
-
+    console.log("categorias:", categories);
     useEffect(() => {
         dispatch(getAllCategories());
     }, [dispatch, show]);
-    console.log(selectedCompany);
+
     return (
         <div className="wrapper">
             {/* Main Sidebar Container */}
@@ -237,48 +246,55 @@ export default function Update() {
                                 <div className="card">
                                     <div className="card-header">
                                         <div className="card-body">
-                                            <div className="pagination mb-1">
-                                                <button
-                                                    className={
-                                                        styles.btn_pagination
-                                                    }
-                                                    onClick={() =>
-                                                        handlePageChange(
-                                                            currentPage - 1
-                                                        )
-                                                    }
-                                                    disabled={currentPage === 1}
-                                                >
-                                                    <BsArrowLeft
+                                            <div className="d-flex justify-content-between py-2">
+                                                <div className="pagination mb-1">
+                                                    <button
                                                         className={
-                                                            styles.btn_icon
+                                                            styles.btn_pagination
                                                         }
-                                                    />
-                                                </button>
+                                                        onClick={() =>
+                                                            handlePageChange(
+                                                                currentPage - 1
+                                                            )
+                                                        }
+                                                        disabled={
+                                                            currentPage === 1
+                                                        }
+                                                    >
+                                                        <BsArrowLeft
+                                                            className={
+                                                                styles.btn_icon
+                                                            }
+                                                        />
+                                                    </button>
 
-                                                {renderPageButtons()}
+                                                    {renderPageButtons()}
 
-                                                <button
-                                                    className={
-                                                        styles.btn_pagination
-                                                    }
-                                                    onClick={() =>
-                                                        handlePageChange(
-                                                            currentPage + 1
-                                                        )
-                                                    }
-                                                    disabled={
-                                                        endIndex >=
-                                                        (companies.data
-                                                            ?.length || 0)
-                                                    }
-                                                >
-                                                    <BsArrowRight
+                                                    <button
                                                         className={
-                                                            styles.btn_icon
+                                                            styles.btn_pagination
                                                         }
-                                                    />
-                                                </button>
+                                                        onClick={() =>
+                                                            handlePageChange(
+                                                                currentPage + 1
+                                                            )
+                                                        }
+                                                        disabled={
+                                                            endIndex >=
+                                                            (companies?.length ||
+                                                                0)
+                                                        }
+                                                    >
+                                                        <BsArrowRight
+                                                            className={
+                                                                styles.btn_icon
+                                                            }
+                                                        />
+                                                    </button>
+                                                </div>
+                                                <Busqueda
+                                                    despachar={searchCategory}
+                                                ></Busqueda>
                                             </div>
                                             <Table bordered hover>
                                                 <thead>
@@ -401,9 +417,9 @@ export default function Update() {
                                                                                 }
                                                                             >
                                                                                 <BsTrash
-                                                                                    className={
-                                                                                        styles.btn_icon
-                                                                                    }
+                                                                                    style={{
+                                                                                        color: "#dd3636",
+                                                                                    }}
                                                                                 />
                                                                             </button>
                                                                         ) : (
@@ -418,9 +434,9 @@ export default function Update() {
                                                                                 }
                                                                             >
                                                                                 <BsCheckLg
-                                                                                    className={
-                                                                                        styles.btn_icon
-                                                                                    }
+                                                                                    style={{
+                                                                                        color: "blue",
+                                                                                    }}
                                                                                 />
                                                                             </button>
                                                                         )}

@@ -1,8 +1,6 @@
-
 import axios from "axios";
 import {
-    GET_CITIES,
-    GET_PROVINCE,
+    GET_REVIEWS,
     SEARCH_RESULTS,
     USER_LOGIN,
     GET_TERMINAL,
@@ -10,7 +8,10 @@ import {
     GET_ALL_COMPANIES,
     GET_ALL_USERS,
     GET_FACTURAS_MAP,
-    GET_ALL_FACTURAS
+    GET_ALL_FACTURAS,
+    GET_SEARCH_DATA,
+    GET_SEARCH_CATEGORY,
+  
 } from "./action-types";
 
 const url = process.env.BACKEND_URL;
@@ -34,7 +35,6 @@ export const deleteUsers = (iduser) => async () => {
 export const getAllUsers = () => {
     return async (dispatch) => {
         try {
-
             const { data } = await axios.get(`${url}/usuarios`);
 
             dispatch({
@@ -100,7 +100,8 @@ export const getAllFacturas = () => {
 export const userLogin = () => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get(`${url}/auth/perfil`)
+            const { data } = await axios.get(`${url}/auth/perfil`);
+            console.log("user", data.user);
             dispatch({
                 type: USER_LOGIN,
                 payload: data,
@@ -111,20 +112,6 @@ export const userLogin = () => {
     };
 };
 
-export const getCities = () => {
-    return async (dispatch) => {
-        try {
-
-            const { data } = await axios.get(`${url}/ciudades/get_cities`);
-            dispatch({
-                type: GET_CITIES,
-                payload: data,
-            });
-        } catch (error) {
-            console.error(error);
-        }
-    };
-};
 export const getTerminales = () => {
     return async (dispatch) => {
         try {
@@ -139,12 +126,12 @@ export const getTerminales = () => {
     };
 };
 
-export const getProvince = () => {
+export const getAllReviews = () => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get(`${url}/provincias/get_province`);
+            const { data } = await axios.get(`${url}/reviews`);
             dispatch({
-                type: GET_PROVINCE,
+                type: GET_REVIEWS,
                 payload: data,
             });
         } catch (error) {
@@ -160,7 +147,7 @@ export const getAllCategories = () => {
 
             dispatch({
                 type: GET_ALL_COMPANIES,
-                payload: data,
+                payload: data.data,
             });
         } catch (error) {
             console.log(error);
@@ -171,24 +158,36 @@ export const getAllCategories = () => {
 export const getProducts = () => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get(`${url}/productos`)
+            const { data } = await axios.get(`${url}/productos`);
 
             dispatch({
                 type: GET_PRODUCTOS,
                 payload: data.data,
-            })
+            });
         } catch (error) {
             console.error(error);
         }
-    }
-}
+    };
+};
 export const createProcut = (formData) => async () => {
+    console.log("REDUX", formData);
     try {
         const response = await axios.post(`${url}/productos`, formData);
-        console.log('Registro exitoso:', response.data);
+        console.log("Registro exitoso:", response.data);
     } catch (error) {
-        console.error('Error en el registro:', error.message);
+        console.error("Error en el registro:", error.message);
     }
 };
 
-
+export const searchData = (data) => {
+    return {
+        type: GET_SEARCH_DATA,
+        payload: data,
+    };
+};
+export const searchCategory = (data) => {
+    return {
+        type: GET_SEARCH_CATEGORY,
+        payload: data,
+    };
+};
