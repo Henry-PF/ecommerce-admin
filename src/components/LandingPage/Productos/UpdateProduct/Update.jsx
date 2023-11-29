@@ -9,13 +9,15 @@ import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const url = process.env.BACKEND_URL;
 
 export default function Update() {
 
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const products = useSelector((state) => state.products);
 
   const [show, setShow] = useState(false);
@@ -24,9 +26,13 @@ export default function Update() {
 
   const handleClose = () => setShow(false);
 
-  const handlePageChange = (page) => {
-    console.log(page);
-    setCurrentPage(page);
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const updatedParams = new URLSearchParams(location.search);
+    updatedParams.set('page', newPage);
+    navigate(`${location.pathname}?${updatedParams.toString()}`);
   };
 
   const handleClickEdit = (busId) => {
@@ -136,35 +142,13 @@ export default function Update() {
 
   };
 
-  const itemsPerPage = 10;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
   // const visibleProduct = products?.slice(startIndex, endIndex);
 
-  const renderPageButtons = () => {
-    const totalPages = Math.ceil((products?.data?.length || 0) / itemsPerPage);
-
-    const buttons = [];
-    for (let page = 1; page <= totalPages; page++) {
-      buttons.push(
-        <button
-          key={page}
-          onClick={() => handlePageChange(page)}
-          className={currentPage === page ? styles.btn_active : styles.btn_pagination}
-        >
-          {page}
-        </button>
-      );
-    }
-
-    return buttons;
-  };
 
 
   useEffect(() => {
     dispatch(getProducts(currentPage))
-  }, [dispatch, show]);
+  }, [dispatch, show, currentPage]);
 
   return (
     <div className="wrapper">
@@ -270,9 +254,6 @@ export default function Update() {
                             }
                           />
                         </button>
-
-                        {renderPageButtons()}
-
                         <button
                           className={
                             styles.btn_pagination
