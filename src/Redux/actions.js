@@ -163,14 +163,14 @@ export const getAllCategories = () => {
     };
 };
 
-export const getProducts = () => {
+export const getProducts = (page) => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get(`/productos`);
-
+            const { data } = await axios.get(`/productos?page=${page}`);
+            console.log(data);
             dispatch({
                 type: GET_PRODUCTOS,
-                payload: data?.data,
+                payload: data
             });
         } catch (error) {
             console.error(error);

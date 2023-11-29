@@ -18,6 +18,7 @@ import {
 import { Link } from "react-router-dom";
 import Busqueda from "../../../Busqueda/Busqueda";
 
+
 //const url = process.env.BACKEND_URL;
 const url = "https://backend-dev-jnpc.1.us-1.fl0.io/api"
 
@@ -57,7 +58,7 @@ export default function Update() {
     const handleSaveChanges = async () => {
         try {
             const data = await axios.post(
-                `${url}/categorias/update`,
+                `/categorias/update`,
                 selectedCompany
             );
             console.log(data);
@@ -97,7 +98,7 @@ export default function Update() {
             }).then((result) => {
                 if (result.isConfirmed) {
                     const { data } = axios.post(
-                        `${url}/categorias/delete`,
+                        `/categorias/delete`,
                         idCategoria
                     );
                     Swal.fire("Categoria inavilitada!", "success").then(() => {
@@ -129,7 +130,7 @@ export default function Update() {
             }).then((result) => {
                 if (result.isConfirmed) {
                     const { data } = axios.post(
-                        `${url}/categorias/active`,
+                        `/categorias/active`,
                         idCategoria
                     );
                     Swal.fire("Categoria habilitada!", "success").then(() => {
@@ -360,13 +361,13 @@ export default function Update() {
                                                                     <td
                                                                         className={
                                                                             company.id_statud ===
-                                                                            1
+                                                                                1
                                                                                 ? styles.activo
                                                                                 : styles.inactivo
                                                                         }
                                                                     >
                                                                         {company.id_statud !==
-                                                                        1
+                                                                            1
                                                                             ? "Inactivo"
                                                                             : "Activo"}
                                                                     </td>
@@ -402,7 +403,7 @@ export default function Update() {
                                                                         }
                                                                     >
                                                                         {company.id_statud ===
-                                                                        1 ? (
+                                                                            1 ? (
                                                                             <button
                                                                                 className={
                                                                                     styles.button

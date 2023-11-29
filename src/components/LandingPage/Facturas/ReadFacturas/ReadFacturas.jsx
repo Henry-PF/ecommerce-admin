@@ -13,7 +13,7 @@ import Modal from 'react-bootstrap/Modal';
 export default function ReadFacturas() {
 
   const [show, setShow] = useState(false);
-  const [Selectedfacturas, setSelectedfacturas] = useState({});
+  const [Selectedfacturas, setSelectedfacturas] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [ProductsToMap, setProductsToMap] = useState([]);
 

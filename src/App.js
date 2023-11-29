@@ -5,7 +5,7 @@ import Login from "./components/Login/Login";
 import Create from './components/LandingPage/Productos/CreateProduct/Create';
 import Update from './components/LandingPage/Productos/UpdateProduct/Update';
 /* Rutas Facturas */
-import ReadFacturas from "./components/LandingPage/Facturas/ReadFacturas/ReadFacturas"; 
+import ReadFacturas from "./components/LandingPage/Facturas/ReadFacturas/ReadFacturas";
 /* Rutas Categorias */
 import CreateCategorias from "./components/LandingPage/Categorias/CreateCategorias/Create";
 import UpdateCategorias from "./components/LandingPage/Categorias/UpdateCategorias/Update";
@@ -13,9 +13,8 @@ import UpdateCategorias from "./components/LandingPage/Categorias/UpdateCategori
 import View from "./components/LandingPage/Reviews/View/View";
 import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
 import "./App.css";
-import axios from 'axios'
-axios.defaults.baseURL = "https://backend-dev-jnpc.1.us-1.fl0.io/api"
 
+axios.defaults.baseURL = 'http://localhost:3002/ap
 function App() {
     return (
         <div className="App">
@@ -26,7 +25,7 @@ function App() {
                     <Route exact path='/admin/Productos/create' element={<Create />} />
                     <Route exact path='/admin/Productos/updateDelete' element={<Update />} />
                     {/* Rutas Facturas */}
-                    <Route exact path='/admin/facturas/updateDelete' element={<ReadFacturas/>} />
+                    <Route exact path='/admin/facturas/updateDelete' element={<ReadFacturas />} />
                     {/* Rutas Categorias */}
 
                     <Route

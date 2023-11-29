@@ -24,7 +24,10 @@ export default function Create() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const { data } = await axios.post(`${url}/categorias`, datos);
+            const { data } = await axios.post(
+                `/categorias`,
+                datos
+            );
             if (data) {
                 Swal.fire(
                     "Categoria creada exitosamente!",
