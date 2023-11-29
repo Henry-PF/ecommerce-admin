@@ -22,7 +22,7 @@ export default function Create() {
         event.preventDefault();
         try {
             const { data } = await axios.post(
-                `${url}/categorias`,
+                `/categorias`,
                 datos
             );
             if (data) {

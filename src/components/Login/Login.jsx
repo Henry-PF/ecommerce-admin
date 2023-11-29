@@ -7,6 +7,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 
+const url = process.env.BACKEND_URL;
+
 const LoginPage = (props) => {
 
     // const dispatch = useDispatch();
@@ -27,7 +29,7 @@ const LoginPage = (props) => {
         const { email, password } = userData;
 
         try {
-            const { data } = await axios.post(`${url}/auth/login`, {
+            const { data } = await axios.post(`/auth/login`, {
                 correo: email,
                 password: password,
             });
@@ -39,7 +41,7 @@ const LoginPage = (props) => {
                     icon: "error",
                 });
             } else if (data.token) {
-                if (data.data && data.data.usuarios[0].type === "admin") {
+                if (data.data && data.data.type === "admin") {
                     setToken(data.token);
                     localStorage.setItem("token", data.token);
                     localStorage.setItem("nombre", data.data.nombre);
@@ -60,14 +62,14 @@ const LoginPage = (props) => {
         }
     };
 
-    useEffect(() => {
-        const userData = Cookies.get("userData");
-        if (userData) {
-            const parsedUser = JSON.parse(userData);
-            setUser(parsedUser);
-            console.log(user);
-        }
-    }, []);
+    // useEffect(() => {
+    //     const userData = Cookies.get("userData");
+    //     if (userData) {
+    //         const parsedUser = JSON.parse(userData);
+    //         setUser(parsedUser);
+    //         console.log(user);
+    //     }
+    // }, []);
 
     return (
         <>

@@ -13,7 +13,7 @@ import Modal from 'react-bootstrap/Modal';
 export default function ReadFacturas() {
 
   const [show, setShow] = useState(false);
-  const [Selectedfacturas, setSelectedfacturas] = useState({});
+  const [Selectedfacturas, setSelectedfacturas] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
 
   const dispatch = useDispatch();
@@ -94,23 +94,23 @@ export default function ReadFacturas() {
             <form action="" className={styles.form}>
               <div className={styles.input}>
                 <label>Producto Comprado: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].producto.descripcion? Selectedfacturas.factura_detalles[0].producto.descripcion : "No existe"}</h5>
+                <h5>{Selectedfacturas?.factura_detalles[0]?.producto.descripcion ? Selectedfacturas.factura_detalles[0].producto.descripcion : "No existe"}</h5>
                 <label>Cantidad: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].cantidad? Selectedfacturas.factura_detalles[0].cantidad : "No existe"}</h5>
+                <h5>{Selectedfacturas?.factura_detalles[0]?.cantidad ? Selectedfacturas?.factura_detalles[0]?.cantidad : "No existe"}</h5>
                 <label>id_factura: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].id_factura? Selectedfacturas.factura_detalles[0].id_factura: "No existe"}</h5>
+                <h5>{Selectedfacturas?.factura_detalles[0]?.id_factura ? Selectedfacturas?.factura_detalles[0]?.id_factura : "No existe"}</h5>
                 <label>id_producto: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].id_producto? Selectedfacturas.factura_detalles[0].id_producto : "No existe"}</h5>
+                <h5>{Selectedfacturas?.factura_detalles[0]?.id_producto ? Selectedfacturas?.factura_detalles[0]?.id_producto : "No existe"}</h5>
                 <label>Nombre del producto: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].producto.nombre? Selectedfacturas.factura_detalles[0].producto.nombre: "No existe"}</h5>
+                <h5>{Selectedfacturas?.factura_detalles[0]?.producto?.nombre ? Selectedfacturas?.factura_detalles[0]?.producto?.nombre : "No existe"}</h5>
                 <label>Precio: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].producto.precio? Selectedfacturas.factura_detalles[0].producto.precio: "No existe"}</h5>
+                <h5>{Selectedfacturas?.factura_detalles[0]?.producto?.precio ? Selectedfacturas?.factura_detalles[0]?.producto?.precio : "No existe"}</h5>
                 <label>Stock del producto: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].producto.stock? Selectedfacturas.factura_detalles[0].producto.stock : "No existe"}</h5>
+                <h5>{Selectedfacturas?.factura_detalles[0]?.producto?.stock ? Selectedfacturas?.factura_detalles[0]?.producto?.stock : "No existe"}</h5>
                 <label>Nombre del usuario: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].usuario? Selectedfacturas.factura_detalles[0].usuario : "No se registro el usuario: Null"}</h5>
+                <h5>{Selectedfacturas?.factura_detalles[0]?.usuario ? Selectedfacturas?.factura_detalles[0]?.usuario : "No se registro el usuario: Null"}</h5>
                 <label>ID del usuario: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].id_usuario? Selectedfacturas.factura_detalles[0].id_usuario : "No se registro el usuario: Null"}</h5>
+                <h5>{Selectedfacturas?.factura_detalles[0]?.id_usuario ? Selectedfacturas?.factura_detalles[0]?.id_usuario : "No se registro el usuario: Null"}</h5>
               </div>
             </form>
           </Modal.Body>

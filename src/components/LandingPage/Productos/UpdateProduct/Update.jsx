@@ -9,16 +9,14 @@ import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const url = process.env.BACKEND_URL;
-
-
 
 export default function Update() {
 
   const dispatch = useDispatch();
-  const products = useSelector(state => state.products);
+  const products = useSelector((state) => state.products);
 
   const [show, setShow] = useState(false);
   const [Selectedproducts, setSelectedproducts] = useState({});
@@ -27,11 +25,12 @@ export default function Update() {
   const handleClose = () => setShow(false);
 
   const handlePageChange = (page) => {
+    console.log(page);
     setCurrentPage(page);
   };
 
   const handleClickEdit = (busId) => {
-    const Selectedproducts = products?.find((bus) => bus.id === busId);
+    const Selectedproducts = products?.data?.find((bus) => bus.id === busId);
     setSelectedproducts(Selectedproducts);
     setShow(true);
   };
@@ -45,7 +44,7 @@ export default function Update() {
 
   const handleSaveChange = async () => {
     try {
-      const data = await axios.post(`${url}productos/update`, Selectedproducts);
+      const data = await axios.post(`productos/update`, Selectedproducts);
       if (data.status === 200) {
         Swal.fire({
           title: data.data.message,
@@ -79,7 +78,7 @@ export default function Update() {
             "id": id,
           }
 
-          const { data } = axios.post(`${url}productos/delete`, dataToSend);
+          const { data } = axios.post(`productos/delete`, dataToSend);
           Swal.fire(
             'Servicio Deshabilitado!',
             'El Servicio fue deshabilidato exitosamente.',
@@ -108,7 +107,7 @@ export default function Update() {
         confirmButtonText: 'Si, habilitar!'
       }).then((result) => {
         if (result.isConfirmed) {
-          const Selectedproduct = products?.find((prodcut) => prodcut.id === id);
+          const Selectedproduct = products?.data?.find((prodcut) => prodcut.id === id);
           const dataToSend = {
             "id": id,
             "nombre": Selectedproduct.nombre,
@@ -120,7 +119,7 @@ export default function Update() {
             "id_categoria": Selectedproduct.id_categoria,
             "id_statud": 1
           }
-          const { data } = axios.post(`${url}productos/update`, dataToSend);
+          const { data } = axios.post(`productos/update`, dataToSend);
           Swal.fire(
             'Servicio Habilitado!',
             'El Servicio fue habilidato exitosamente.',
@@ -141,10 +140,10 @@ export default function Update() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  const visibleProduct = products?.slice(startIndex, endIndex);
+  // const visibleProduct = products?.slice(startIndex, endIndex);
 
   const renderPageButtons = () => {
-    const totalPages = Math.ceil((products.data?.length || 0) / itemsPerPage);
+    const totalPages = Math.ceil((products?.data?.length || 0) / itemsPerPage);
 
     const buttons = [];
     for (let page = 1; page <= totalPages; page++) {
@@ -164,7 +163,7 @@ export default function Update() {
 
 
   useEffect(() => {
-    dispatch(getProducts())
+    dispatch(getProducts(currentPage))
   }, [dispatch, show]);
 
   return (
@@ -173,22 +172,22 @@ export default function Update() {
       <SideBar></SideBar>
       {/* Content Wrapper. Contains page content */}
       <div className="content-wrapper">
-      <section className="content-header">
-                    <div className={styles.botonBack}>
-                        <Link
-                            to="/admin/home"
-                            className="btn btn-outline-secondary"
-                        >
-                            Volver
-                        </Link>
-                    </div>
-                </section>
+        <section className="content-header">
+          <div className={styles.botonBack}>
+            <Link
+              to="/admin/home"
+              className="btn btn-outline-secondary"
+            >
+              Volver
+            </Link>
+          </div>
+        </section>
         {/* Content Header (Page header) */}
         <section className="content-header">
           <div className="container-fluid">
-            
-                <h1 className='text-center'>Lista de Productos</h1>
-              
+
+            <h1 className='text-center'>Lista de Productos</h1>
+
           </div>
         </section>
 
@@ -283,11 +282,7 @@ export default function Update() {
                               currentPage + 1
                             )
                           }
-                          disabled={
-                            endIndex >=
-                            (products
-                              ?.length || 0)
-                          }
+
                         >
                           <BsArrowRight
                             className={
@@ -307,12 +302,12 @@ export default function Update() {
                             <th className={styles.th}>Status</th>
                           </tr>
                         </thead>
-                        {visibleProduct?.map((producto) => {
+                        {products?.data?.map((producto) => {
                           return <tbody key={producto.id}>
                             <tr>
                               <td className={styles.td}>{producto.id}</td>
                               <td className={styles.td}>{producto.nombre}</td>
-                              <td className={styles.td}>{producto.precio}</td>
+                              <td className={styles.td}>$ {producto.precio}</td>
                               <td className={styles.td}>{producto.descripcion}</td>
                               <td className={styles.td}>{producto.stock}</td>
                               <td className={producto.id_statud === 1 ? styles.activo : styles.inactivo}>{producto.id_statud}</td>
