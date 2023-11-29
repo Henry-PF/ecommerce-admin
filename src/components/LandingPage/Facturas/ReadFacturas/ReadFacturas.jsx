@@ -13,7 +13,7 @@ import Modal from 'react-bootstrap/Modal';
 export default function ReadFacturas() {
 
   const [show, setShow] = useState(false);
-  const [Selectedfacturas, setSelectedfacturas] = useState(null);
+  const [Selectedfacturas, setSelectedfacturas] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [ProductsToMap, setProductsToMap] = useState([]);
 
@@ -41,13 +41,6 @@ export default function ReadFacturas() {
 
   const handleClose = () => setShow(false);
 
-  const handleChange = (event) => {
-    setSelectedfacturas({
-      ...Selectedfacturas,
-      [event.target.name]: event.target.value,
-    })
-  };
-
   const renderPageButtons = () => {
     const totalPages = Math.ceil((facturas.data?.length || 0) / itemsPerPage);
 
@@ -69,8 +62,8 @@ export default function ReadFacturas() {
 
 
   useEffect(() => {
-    dispatch(getAllFacturas())
-    dispatch(getFacturasMap())
+    dispatch(getAllFacturas());
+    dispatch(getFacturasMap());
   }, [dispatch, show]);
 
   return (

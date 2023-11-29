@@ -82,7 +82,6 @@ function Graficos(props) {
                 selectedUser
             );
             if (data.status === 200) {
-                console.log(data);
                 Swal.fire({
                     title: "Usuario actualizado",
                     icon: "success",
@@ -115,7 +114,7 @@ function Graficos(props) {
 
     //let visible = usersToMap?.slice(startIndex, endIndex);
     let visible = data?.slice(startIndex, endIndex);
-    console.log("users:", data);
+    
 
     const renderPageButtons = () => {
         const totalPages = Math.ceil((usersToMap?.length || 0) / itemsPerPage);
