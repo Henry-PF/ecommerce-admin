@@ -45,7 +45,7 @@ export default function Update() {
 
   const handleSaveChange = async () => {
     try {
-      const data = await axios.post(`${url}productos/update`, Selectedproducts);
+      const data = await axios.post(`productos/update`, Selectedproducts);
       if (data.status === 200) {
         Swal.fire({
           title: data.data.message,
@@ -79,7 +79,7 @@ export default function Update() {
             "id": id,
           }
 
-          const { data } = axios.post(`${url}productos/delete`, dataToSend);
+          const { data } = axios.post(`productos/delete`, dataToSend);
           Swal.fire(
             'Servicio Deshabilitado!',
             'El Servicio fue deshabilidato exitosamente.',
@@ -120,7 +120,7 @@ export default function Update() {
             "id_categoria": Selectedproduct.id_categoria,
             "id_statud": 1
           }
-          const { data } = axios.post(`${url}productos/update`, dataToSend);
+          const { data } = axios.post(`productos/update`, dataToSend);
           Swal.fire(
             'Servicio Habilitado!',
             'El Servicio fue habilidato exitosamente.',
@@ -144,7 +144,7 @@ export default function Update() {
   const visibleProduct = products?.slice(startIndex, endIndex);
 
   const renderPageButtons = () => {
-    const totalPages = Math.ceil((products.data?.length || 0) / itemsPerPage);
+    const totalPages = Math.ceil((products?.length || 0) / itemsPerPage);
 
     const buttons = [];
     for (let page = 1; page <= totalPages; page++) {

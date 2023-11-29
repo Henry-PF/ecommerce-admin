@@ -8,6 +8,9 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
+const url = process.env.BACKEND_URL;
+console.log(process.env.BACKEND_URL);
+
 export default function Create() {
     const [datos, setDatos] = useState({ id_statud: 1 });
 
@@ -21,10 +24,7 @@ export default function Create() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const { data } = await axios.post(
-                `${url}/categorias`,
-                datos
-            );
+            const { data } = await axios.post(`${url}/categorias`, datos);
             if (data) {
                 Swal.fire(
                     "Categoria creada exitosamente!",
