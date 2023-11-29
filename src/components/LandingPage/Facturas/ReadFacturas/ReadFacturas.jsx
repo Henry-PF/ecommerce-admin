@@ -18,7 +18,6 @@ export default function ReadFacturas() {
 
   const dispatch = useDispatch();
   const facturas = useSelector(state => state.facturas);
-  console.log(facturas)
 
   const itemsPerPage = 10;
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -47,7 +46,7 @@ export default function ReadFacturas() {
   };
 
   const renderPageButtons = () => {
-    const totalPages = Math.ceil((facturas?.length || 0) / itemsPerPage);
+    const totalPages = Math.ceil((facturas.data?.length || 0) / itemsPerPage);
 
     const buttons = [];
     for (let page = 1; page <= totalPages; page++) {
