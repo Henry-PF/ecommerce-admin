@@ -18,7 +18,9 @@ import {
 import { Link } from "react-router-dom";
 import Busqueda from "../../../Busqueda/Busqueda";
 
-const url = process.env.BACKEND_URL;
+
+//const url = process.env.BACKEND_URL;
+const url = "https://backend-dev-jnpc.1.us-1.fl0.io/api"
 
 export default function Update() {
     const [show, setShow] = useState(false);

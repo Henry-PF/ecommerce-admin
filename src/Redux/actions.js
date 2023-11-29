@@ -11,10 +11,9 @@ import {
     GET_ALL_FACTURAS,
     GET_SEARCH_DATA,
     GET_SEARCH_CATEGORY,
-
 } from "./action-types";
 
-const url = process.env.BACKEND_URL;
+/* const url = process.env.BACKEND_URL; */
 
 export const searchResults = (data) => {
     return {
@@ -26,7 +25,6 @@ export const searchResults = (data) => {
 export const deleteUsers = (iduser) => async () => {
     try {
         const response = await axios.post(`/usuarios/delete`, iduser);
-
     } catch (error) {
         console.error("Error en el borrado:", error);
     }
@@ -57,20 +55,30 @@ export const getFacturasMap = () => {
 
             while (indice < 13) {
                 facturas.map((factura) => {
-                    if (factura.createdAt[5] == indice && factura.createdAt[6] == "-") {
+                    if (
+                        factura.createdAt[5] == indice &&
+                        factura.createdAt[6] == "-"
+                    ) {
                         const resultado = beneficios[indice - 1] + 1;
-                        beneficios[indice - 1] = resultado
-                    }
-                    else if (indice > 9 && Number(factura.createdAt[5]) === 1) {
-                        if (Number(factura.createdAt[6]) === 0 || Number(factura.createdAt[6]) === 1 || Number(factura.createdAt[6]) === 2) {
-                            let number = factura.createdAt[5] + factura.createdAt[6];
+                        beneficios[indice - 1] = resultado;
+                    } else if (
+                        indice > 9 &&
+                        Number(factura.createdAt[5]) === 1
+                    ) {
+                        if (
+                            Number(factura.createdAt[6]) === 0 ||
+                            Number(factura.createdAt[6]) === 1 ||
+                            Number(factura.createdAt[6]) === 2
+                        ) {
+                            let number =
+                                factura.createdAt[5] + factura.createdAt[6];
                             if (number == indice) {
                                 const resultado = beneficios[indice - 1] + 1;
-                                beneficios[indice - 1] = resultado
+                                beneficios[indice - 1] = resultado;
                             }
                         }
                     }
-                })
+                });
                 indice++;
             }
 
