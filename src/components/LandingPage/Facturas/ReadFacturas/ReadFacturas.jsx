@@ -15,6 +15,7 @@ export default function ReadFacturas() {
   const [show, setShow] = useState(false);
   const [Selectedfacturas, setSelectedfacturas] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
+  const [ProductsToMap, setProductsToMap] = useState([]);
 
   const dispatch = useDispatch();
   const facturas = useSelector(state => state.facturas);
@@ -32,6 +33,8 @@ export default function ReadFacturas() {
   const handleClickEdit = (busId) => {
     const Selectedfacturas = facturas?.find((bus) => bus.id === busId);
     console.log(Selectedfacturas);
+    setProductsToMap(Selectedfacturas.factura_detalles);
+    console.log(ProductsToMap);
     setSelectedfacturas(Selectedfacturas);
     setShow(true);
   };
@@ -92,25 +95,21 @@ export default function ReadFacturas() {
           </Modal.Header>
           <Modal.Body>
             <form action="" className={styles.form}>
-              <div className={styles.input}>
-                <label>Producto Comprado: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].producto.descripcion? Selectedfacturas.factura_detalles[0].producto.descripcion : "No existe"}</h5>
-                <label>Cantidad: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].cantidad? Selectedfacturas.factura_detalles[0].cantidad : "No existe"}</h5>
+            <div className={styles.input}>
                 <label>id_factura: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].id_factura? Selectedfacturas.factura_detalles[0].id_factura: "No existe"}</h5>
-                <label>id_producto: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].id_producto? Selectedfacturas.factura_detalles[0].id_producto : "No existe"}</h5>
-                <label>Nombre del producto: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].producto.nombre? Selectedfacturas.factura_detalles[0].producto.nombre: "No existe"}</h5>
-                <label>Precio: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].producto.precio? Selectedfacturas.factura_detalles[0].producto.precio: "No existe"}</h5>
-                <label>Stock del producto: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].producto.stock? Selectedfacturas.factura_detalles[0].producto.stock : "No existe"}</h5>
+                <h5>{Selectedfacturas.id}</h5>
+                <label>id_productos: </label>
+                {ProductsToMap.map((producto) => { return <h5>{producto.id_producto}</h5>})}
+                <label>Productos: </label>
+                {ProductsToMap.map((producto) => { return <><h5>{producto.producto.nombre}</h5><p>Precio: {producto.subtotal}</p></>})}
+                <label>Descripcion de productos: </label>
+                {ProductsToMap.map((producto) => { return <h5>{producto.producto.descripcion}</h5>})}
+                <label>Total Pagado: </label>
+                <h5>{Selectedfacturas.total}</h5>
                 <label>Nombre del usuario: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].usuario? Selectedfacturas.factura_detalles[0].usuario : "No se registro el usuario: Null"}</h5>
+                <h5>{Selectedfacturas.usuario? Selectedfacturas.usuario.usuario : "No se registro el usuario: Null"}</h5>
                 <label>ID del usuario: </label>
-                <h5>{Selectedfacturas.factura_detalles[0].id_usuario? Selectedfacturas.factura_detalles[0].id_usuario : "No se registro el usuario: Null"}</h5>
+                <h5>{Selectedfacturas.id_usuario}</h5> 
               </div>
             </form>
           </Modal.Body>
