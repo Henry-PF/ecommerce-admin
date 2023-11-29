@@ -84,7 +84,6 @@ export default function Update() {
             id: selectedCompany.id,
             id_statud: 2,
         };
-        console.log(selectedCompany);
         try {
             Swal.fire({
                 title: "Esta Seguro?",

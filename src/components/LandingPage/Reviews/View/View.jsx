@@ -10,7 +10,8 @@ import styles from "./View.module.css";
 import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen, faTrash } from "@fortawesome/free-solid-svg-icons";
-
+import axios from "axios";
+import Swal from "sweetalert2";
 import { Rating } from "react-simple-star-rating";
 
 function View() {
@@ -32,7 +33,7 @@ function View() {
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
-    const itemsPerPage = 5;
+    const itemsPerPage = 6;
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
 
@@ -61,6 +62,34 @@ function View() {
         }
 
         return buttons;
+    };
+
+    const handleDelete = async (id) => {
+        const selectedReview = reviews.data?.find((review) => review.id === id);
+        const infoReview = {
+            reviewId: selectedReview.id,
+            userId: selectedReview.id_usuario,
+        };
+        try {
+            Swal.fire({
+                title: "Esta Seguro?",
+                text: "Eliminar esta review",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const { data } = axios.post(`/reviews/delete`, infoReview);
+                    Swal.fire("Review inavilitada!", "success").then(() => {
+                        window.location.reload();
+                    });
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     useEffect(() => {
@@ -99,7 +128,10 @@ function View() {
 
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Review {selectedReview.id}</Modal.Title>
+                        <Modal.Title>
+                            Review de{" "}
+                            {selectedReview.usuario?.usuario || "anonimo"}
+                        </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Rating
@@ -192,9 +224,13 @@ function View() {
                                                         >
                                                             contenido
                                                         </th>
-                                                        <th className={
+                                                        <th
+                                                            className={
                                                                 styles.th
-                                                            }>eliminar</th>
+                                                            }
+                                                        >
+                                                            eliminar
+                                                        </th>
                                                     </tr>
                                                 </thead>
                                                 {visible?.map(
@@ -243,12 +279,12 @@ function View() {
                                                                         </button>
                                                                     </td>
                                                                     <td>
-                                                                    <button
+                                                                        <button
                                                                             className={
                                                                                 styles.button
                                                                             }
                                                                             onClick={() =>
-                                                                                handleClickEdit(
+                                                                                handleDelete(
                                                                                     review.id
                                                                                 )
                                                                             }
