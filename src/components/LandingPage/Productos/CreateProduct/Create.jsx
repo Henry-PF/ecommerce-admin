@@ -18,37 +18,51 @@ function Create({ categories }) {
     if (categories.length) {
         dataToMap = [...categories];
     }
-    console.log(dataToMap);
 
     const [dataProduct, setdataProduct] = useState({
         nombre: "",
         descripcion: "",
         precio: 0,
         stock: 0,
-        id_categoria: "",
+        id_categoria: [],
         id_statud: "",
+        imagen: null,
     });
-
+    console.log(dataProduct);
     const handleChange = (event) => {
-        setdataProduct({
-            ...dataProduct,
-            [event.target.name]: event.target.value,
-        });
-        console.log(dataProduct);
-        console.log(categories);
+        if (event.target.name === 'imagen') {
+            setdataProduct({
+                ...dataProduct,
+                [event.target.name]: event.target.files[0],
+            });
+        } else if (event.target.name === 'id_categoria') {
+            setdataProduct({
+                ...dataProduct,
+                [event.target.name]: [...dataProduct.id_categoria, event.target.value],
+            });
+        } else {
+            setdataProduct({
+                ...dataProduct,
+                [event.target.name]: event.target.value,
+            });
+        }
     };
 
-    const onSubmit = () => {
-        const dataToSend = {
-            nombre: dataProduct.nombre,
-            descripcion: dataProduct.descripcion,
-            precio: dataProduct.precio,
-            stock: dataProduct.stock,
-            id_categoria: dataProduct.id_categoria,
-            id_statud: dataProduct.id_statud,
-        };
 
-        dispatch(createProcut(dataToSend));
+    const onSubmit = () => {
+        const formData = new FormData();
+        formData.append('nombre', dataProduct.nombre);
+        formData.append('descripcion', dataProduct.descripcion);
+        formData.append('precio', dataProduct.precio);
+        formData.append('stock', dataProduct.stock);
+        dataProduct.id_categoria.forEach((category) => {
+            formData.append('id_categoria', category);
+        });
+        formData.append('id_statud', dataProduct.id_statud);
+        formData.append('imagen', dataProduct.imagen);
+
+        dispatch(createProcut(formData));
+
         Swal.fire(
             "Producto Creado!",
             "El producto fue creado exitosamente.",
@@ -59,8 +73,9 @@ function Create({ categories }) {
                 descripcion: "",
                 precio: 0,
                 stock: 0,
-                id_categoria: "",
+                id_categoria: [],
                 id_statud: "",
+                imagen: null
             })
         );
     };
@@ -88,13 +103,13 @@ function Create({ categories }) {
                     </section>
                     <section className="content-header">
                         <div className="container-fluid">
-                            
-                                    <h1 className="text-center">
-                                        Crear Producto
-                                    </h1>
-                                </div>
-                            
-                        
+
+                            <h1 className="text-center">
+                                Crear Producto
+                            </h1>
+                        </div>
+
+
                     </section>
                     {/* /.content */}
                     <Form
@@ -205,26 +220,20 @@ function Create({ categories }) {
                                 </Form.Label>
                                 <Select
                                     className={styles.form_input}
-                                    isClearable
+                                    isMulti  // Esto permite la selección múltiple
                                     name="id_categoria"
                                     options={dataToMap?.map((categorie) => ({
                                         value: categorie.id,
                                         label: categorie.nombre,
                                     }))}
                                     placeholder="Categoria"
-                                    onChange={(selectedOption) => {
-                                        if (selectedOption) {
-                                            setdataProduct({
-                                                ...dataProduct,
-                                                id_categoria:
-                                                    selectedOption.value,
-                                            });
-                                        } else {
-                                            setdataProduct({
-                                                ...dataProduct,
-                                                id_categoria: "",
-                                            });
-                                        }
+                                    onChange={(selectedOptions) => {
+                                        // Obtener un array de valores de las opciones seleccionadas
+                                        const selectedValues = selectedOptions ? selectedOptions.map(option => option.value) : [];
+                                        setdataProduct({
+                                            ...dataProduct,
+                                            id_categoria: selectedValues,
+                                        });
                                     }}
                                     required
                                 />
