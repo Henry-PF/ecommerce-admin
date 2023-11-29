@@ -16,9 +16,10 @@ import {
     BsArrowLeft,
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
-
-const url = process.env.BACKEND_URL;
 import Busqueda from "../../../Busqueda/Busqueda";
+
+//const url = process.env.BACKEND_URL;
+const url = "https://backend-dev-jnpc.1.us-1.fl0.io/api"
 
 export default function Update() {
     const [show, setShow] = useState(false);

@@ -7,6 +7,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 
+const url = process.env.BACKEND_URL;
+
 const LoginPage = (props) => {
 
     // const dispatch = useDispatch();
@@ -27,7 +29,7 @@ const LoginPage = (props) => {
         const { email, password } = userData;
 
         try {
-            const { data } = await axios.post(`${url}/auth/login`, {
+            const { data } = await axios.post(`/auth/login`, {
                 correo: email,
                 password: password,
             });

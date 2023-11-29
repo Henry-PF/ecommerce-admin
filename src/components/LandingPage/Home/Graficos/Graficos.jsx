@@ -14,6 +14,8 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Busqueda from "../../../Busqueda/Busqueda";
 import { searchData } from "../../../../Redux/actions";
 
+const url = "https://backend-dev-jnpc.1.us-1.fl0.io/api";
+
 function Graficos(props) {
     const dispatch = useDispatch();
     const usersToMap = props.AllUsers;
@@ -76,7 +78,7 @@ function Graficos(props) {
     const handleSaveChange = async () => {
         try {
             const data = await axios.post(
-                "http://localhost:3002/api/usuarios/update",
+                `${url}/usuarios/update`,
                 selectedUser
             );
             if (data.status === 200) {
