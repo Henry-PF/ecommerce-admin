@@ -9,7 +9,7 @@ import { getAllReviews } from "../../../../Redux/actions";
 import styles from "./View.module.css";
 import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
+import { faBookOpen, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import { Rating } from "react-simple-star-rating";
 
@@ -107,7 +107,7 @@ function View() {
                             readonly
                             allowFraction
                         />
-                        <h4>Puntuacion: {selectedReview.puntuacion}</h4>
+                        <p>Puntuacion: {selectedReview.puntuacion}</p>
                         <p>{selectedReview.contenido}</p>
                     </Modal.Body>
                     <Modal.Footer>
@@ -192,6 +192,9 @@ function View() {
                                                         >
                                                             contenido
                                                         </th>
+                                                        <th className={
+                                                                styles.th
+                                                            }>eliminar</th>
                                                     </tr>
                                                 </thead>
                                                 {visible?.map(
@@ -235,6 +238,27 @@ function View() {
                                                                                 }
                                                                                 style={{
                                                                                     color: "#a1a1a1cc",
+                                                                                }}
+                                                                            />
+                                                                        </button>
+                                                                    </td>
+                                                                    <td>
+                                                                    <button
+                                                                            className={
+                                                                                styles.button
+                                                                            }
+                                                                            onClick={() =>
+                                                                                handleClickEdit(
+                                                                                    review.id
+                                                                                )
+                                                                            }
+                                                                        >
+                                                                            <FontAwesomeIcon
+                                                                                icon={
+                                                                                    faTrash
+                                                                                }
+                                                                                style={{
+                                                                                    color: "red",
                                                                                 }}
                                                                             />
                                                                         </button>

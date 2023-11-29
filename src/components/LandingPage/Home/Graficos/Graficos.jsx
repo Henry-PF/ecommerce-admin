@@ -170,41 +170,63 @@ function Graficos(props) {
                         </Modal.Header>
                         <Modal.Body>
                             <form action="" className={styles.form}>
+                                <div className="d-flex">
+                                    <FloatingLabel
+                                        controlId="floatingPassword"
+                                        label="Nombre"
+                                        className="w-50"
+                                    >
+                                        <Form.Control
+                                            className={styles.form_input}
+                                            type="text"
+                                            placeholder="Nombre"
+                                            name="nombre"
+                                            value={
+                                                selectedUser?.persona?.nombre
+                                            }
+                                            onChange={(event) =>
+                                                handleChange(event)
+                                            }
+                                            required
+                                        />
+                                    </FloatingLabel>
+                                    <FloatingLabel
+                                        controlId="floatingPassword"
+                                        label="Apellido"
+                                        className="w-50"
+                                    >
+                                        <Form.Control
+                                            className={styles.form_input}
+                                            type="text"
+                                            placeholder="Apellido"
+                                            name="apellido"
+                                            value={
+                                                selectedUser?.persona?.apellido
+                                            }
+                                            onChange={(event) =>
+                                                handleChange(event)
+                                            }
+                                            required
+                                        />
+                                    </FloatingLabel>
+                                </div>
                                 <FloatingLabel
                                     controlId="floatingPassword"
-                                    label="Nombre"
-                                    className="w-100"
+                                    label="Email"
+                                    className="w-100 me-2"
                                 >
                                     <Form.Control
                                         className={styles.form_input}
                                         type="text"
-                                        placeholder="Nombre"
-                                        name="nombre"
-                                        value={selectedUser?.persona?.nombre}
+                                        placeholder="Email"
+                                        name="email"
+                                        value={selectedUser?.persona?.correo}
                                         onChange={(event) =>
                                             handleChange(event)
                                         }
                                         required
                                     />
                                 </FloatingLabel>
-                                <FloatingLabel
-                                    controlId="floatingPassword"
-                                    label="Apellido"
-                                    className="w-100"
-                                >
-                                    <Form.Control
-                                        className={styles.form_input}
-                                        type="text"
-                                        placeholder="Apellido"
-                                        name="apellido"
-                                        value={selectedUser?.persona?.apellido}
-                                        onChange={(event) =>
-                                            handleChange(event)
-                                        }
-                                        required
-                                    />
-                                </FloatingLabel>
-
                                 <FloatingLabel
                                     controlId="floatingPassword"
                                     label="Telefono"
@@ -232,7 +254,7 @@ function Graficos(props) {
                                         type="text"
                                         placeholder="direccion"
                                         name="direccion"
-                                        value={selectedUser?.persona?.direccion}
+                                        value={selectedUser?.persona?.direccion || 'S/D'}
                                         onChange={(event) =>
                                             handleChange(event)
                                         }
@@ -261,12 +283,6 @@ function Graficos(props) {
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
                                 Cerrar
-                            </Button>
-                            <Button
-                                variant="primary"
-                                onClick={handleSaveChange}
-                            >
-                                Guardar Cambios
                             </Button>
                         </Modal.Footer>
                     </Modal>
