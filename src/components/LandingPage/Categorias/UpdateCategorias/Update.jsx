@@ -38,7 +38,7 @@ export default function Update() {
     };
 
     const handleClickEdit = (companyId) => {
-        const selectedCompany = companies.data?.find(
+        const selectedCompany = companies?.find(
             (company) => company.id === companyId
         );
         setSelectedCompany(selectedCompany);
@@ -80,9 +80,7 @@ export default function Update() {
     };
 
     const handleDelete = async (id) => {
-        const selectedCompany = companies.data?.find(
-            (company) => company.id === id
-        );
+        const selectedCompany = companies?.find((company) => company.id === id);
         const idCategoria = {
             id: selectedCompany.id,
             id_statud: 2,
@@ -114,9 +112,7 @@ export default function Update() {
     };
 
     const handleActive = async (id) => {
-        const selectedCompany = companies.data?.find(
-            (company) => company.id === id
-        );
+        const selectedCompany = companies?.find((company) => company.id === id);
 
         const idCategoria = {
             id: selectedCompany.id,
