@@ -11,15 +11,18 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import {Link} from 'react-router-dom'
 
+const url = process.env.BACKEND_URL;
+
+
 
 export default function Update() {
+
+  const dispatch = useDispatch();
+  const products = useSelector(state => state.products);
 
   const [show, setShow] = useState(false);
   const [Selectedproducts, setSelectedproducts] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-
-  const dispatch = useDispatch();
-  const products = useSelector(state => state.products);
 
   const handleClose = () => setShow(false);
 
@@ -30,7 +33,6 @@ export default function Update() {
   const handleClickEdit = (busId) => {
     const Selectedproducts = products?.find((bus) => bus.id === busId);
     setSelectedproducts(Selectedproducts);
-    console.log(Selectedproducts);
     setShow(true);
   };
 
@@ -43,7 +45,7 @@ export default function Update() {
 
   const handleSaveChange = async () => {
     try {
-      const data = await axios.post('productos/update', Selectedproducts);
+      const data = await axios.post(`${url}productos/update`, Selectedproducts);
       if (data.status === 200) {
         Swal.fire({
           title: data.data.message,
@@ -76,8 +78,8 @@ export default function Update() {
           const dataToSend = {
             "id": id,
           }
-          console.log(dataToSend);
-          const { data } = axios.post(`productos/delete`, dataToSend);
+
+          const { data } = axios.post(`${url}productos/delete`, dataToSend);
           Swal.fire(
             'Servicio Deshabilitado!',
             'El Servicio fue deshabilidato exitosamente.',
@@ -91,7 +93,7 @@ export default function Update() {
     } catch (error) {
       console.error(error);
     }
-    console.log("Borrado Logico");
+
   };
 
   const handleActive = async (id) => {
@@ -118,7 +120,7 @@ export default function Update() {
             "id_categoria": Selectedproduct.id_categoria,
             "id_statud": 1
           }
-          const { data } = axios.post(`productos/update`, dataToSend);
+          const { data } = axios.post(`${url}productos/update`, dataToSend);
           Swal.fire(
             'Servicio Habilitado!',
             'El Servicio fue habilidato exitosamente.',
@@ -132,7 +134,7 @@ export default function Update() {
     } catch (error) {
       console.error(error);
     }
-    console.log("activacion Logica");
+
   };
 
   const itemsPerPage = 10;
@@ -253,21 +255,45 @@ export default function Update() {
                     <div className="card-body">
                       <div className="pagination mb-1">
                         <button
-                          className={styles.btn_pagination}
-                          onClick={() => handlePageChange(currentPage - 1)}
+                          className={
+                            styles.btn_pagination
+                          }
+                          onClick={() =>
+                            handlePageChange(
+                              currentPage - 1
+                            )
+                          }
                           disabled={currentPage === 1}
                         >
-                          <BsArrowLeft className={styles.btn_icon} />
+                          <BsArrowLeft
+                            className={
+                              styles.btn_icon
+                            }
+                          />
                         </button>
 
                         {renderPageButtons()}
 
                         <button
-                          className={styles.btn_pagination}
-                          onClick={() => handlePageChange(currentPage + 1)}
-                          disabled={endIndex >= (products?.length || 0)}
+                          className={
+                            styles.btn_pagination
+                          }
+                          onClick={() =>
+                            handlePageChange(
+                              currentPage + 1
+                            )
+                          }
+                          disabled={
+                            endIndex >=
+                            (products
+                              ?.length || 0)
+                          }
                         >
-                          <BsArrowRight className={styles.btn_icon} />
+                          <BsArrowRight
+                            className={
+                              styles.btn_icon
+                            }
+                          />
                         </button>
                       </div>
                       <Table bordered hover>

@@ -22,7 +22,7 @@ export default function Create() {
         event.preventDefault();
         try {
             const { data } = await axios.post(
-                "http://localhost:3002/api/categorias/",
+                `${url}/categorias`,
                 datos
             );
             if (data) {

@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import SideBar from "../../Home/Graficos/SideBar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Update.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { getAllCategories } from "../../../../Redux/actions";
+import { getAllCategories, searchCategory } from "../../../../Redux/actions";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
@@ -19,8 +16,9 @@ import {
     BsArrowLeft,
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
+
+const url = process.env.BACKEND_URL;
 import Busqueda from "../../../Busqueda/Busqueda";
-import { searchCategory } from "../../../../Redux/actions";
 
 export default function Update() {
     const [show, setShow] = useState(false);
@@ -58,7 +56,7 @@ export default function Update() {
     const handleSaveChanges = async () => {
         try {
             const data = await axios.post(
-                "http://localhost:3002/api/categorias/update",
+                `${url}/categorias/update`,
                 selectedCompany
             );
             console.log(data);
@@ -100,7 +98,7 @@ export default function Update() {
             }).then((result) => {
                 if (result.isConfirmed) {
                     const { data } = axios.post(
-                        `http://localhost:3002/api/categorias/delete`,
+                        `${url}/categorias/delete`,
                         idCategoria
                     );
                     Swal.fire("Categoria inavilitada!", "success").then(() => {
@@ -134,7 +132,7 @@ export default function Update() {
             }).then((result) => {
                 if (result.isConfirmed) {
                     const { data } = axios.post(
-                        `http://localhost:3002/api/categorias/delete`,
+                        `${url}/categorias/active`,
                         idCategoria
                     );
                     Swal.fire("Categoria habilitada!", "success").then(() => {

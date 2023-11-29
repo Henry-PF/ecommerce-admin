@@ -4,19 +4,17 @@ import {
     SEARCH_RESULTS,
     USER_LOGIN,
     GET_TERMINAL,
-    GET_ALL_RUTES,
-    DELETE_RUTE,
-    GET_ALL_PRODUCTS,
     GET_PRODUCTOS,
-    GET_ALL_CATEGORIES,
     GET_ALL_COMPANIES,
     GET_ALL_USERS,
-    CREATED_ROUTE,
+    GET_FACTURAS_MAP,
+    GET_ALL_FACTURAS,
     GET_SEARCH_DATA,
     GET_SEARCH_CATEGORY,
+  
 } from "./action-types";
 
-const url = "http://localhost:3002/api";
+const url = process.env.BACKEND_URL;
 
 export const searchResults = (data) => {
     return {
@@ -28,7 +26,7 @@ export const searchResults = (data) => {
 export const deleteUsers = (iduser) => async () => {
     try {
         const response = await axios.post(`${url}/usuarios/delete`, iduser);
-        console.log(response);
+
     } catch (error) {
         console.error("Error en el borrado:", error);
     }
@@ -38,9 +36,59 @@ export const getAllUsers = () => {
     return async (dispatch) => {
         try {
             const { data } = await axios.get(`${url}/usuarios`);
-            console.log(data);
+
             dispatch({
                 type: GET_ALL_USERS,
+                payload: data.data,
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    };
+};
+export const getFacturasMap = () => {
+    let indice = 0;
+    let beneficios = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.get(`${url}/facturas`);
+            const facturas = data.data;
+
+            while (indice < 13) {
+                facturas.map((factura) => {
+                    if (factura.createdAt[5] == indice && factura.createdAt[6] == "-") {
+                        const resultado = beneficios[indice - 1] + 1;
+                        beneficios[indice - 1] = resultado
+                    }
+                    else if (indice > 9 && Number(factura.createdAt[5]) === 1) {
+                        if (Number(factura.createdAt[6]) === 0 || Number(factura.createdAt[6]) === 1 || Number(factura.createdAt[6]) === 2) {
+                            let number = factura.createdAt[5] + factura.createdAt[6];
+                            if (number == indice) {
+                                const resultado = beneficios[indice - 1] + 1;
+                                beneficios[indice - 1] = resultado
+                            }
+                        }
+                    }
+                })
+                indice++;
+            }
+
+            dispatch({
+                type: GET_FACTURAS_MAP,
+                payload: beneficios,
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    };
+};
+export const getAllFacturas = () => {
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.get(`${url}/facturas`);
+            dispatch({
+                type: GET_ALL_FACTURAS,
                 payload: data.data,
             });
         } catch (error) {
@@ -54,7 +102,6 @@ export const userLogin = () => {
         try {
             const { data } = await axios.get(`${url}/auth/perfil`);
             console.log("user", data.user);
-
             dispatch({
                 type: USER_LOGIN,
                 payload: data,
