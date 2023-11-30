@@ -1,0 +1,22 @@
+.th,
+.td {
+    padding: 10px;
+    text-align: center;
+}
+.button {
+    border: none;
+    background: transparent;
+}
+.input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+.btn_icon {
+    color: "#dd3636";
+}
+.btn_active {
+    background-color: #716f6f;
+    color: #fff;
+}

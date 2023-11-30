@@ -2,46 +2,55 @@ import React, { useEffect, useState } from 'react';
 import SideBar from '../../Home/Graficos/SideBar';
 import styles from "./Update.module.css";
 import { useDispatch, useSelector } from 'react-redux';
-import { getBuses } from '../../../../Redux/actions';
+import { getProducts } from '../../../../Redux/actions';
 import { BsTrash, BsPencilSquare, BsCheckLg, BsArrowRight, BsArrowLeft } from 'react-icons/bs';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
+const url = process.env.BACKEND_URL;
 
 export default function Update() {
 
-  const [show, setShow] = useState(false);
-  const [selectedBus, setSelectedBus] = useState({});
-  const [currentPage, setCurrentPage] = useState(1);
-
   const dispatch = useDispatch();
-  const buses = useSelector(state => state.buses);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const products = useSelector((state) => state.products);
+
+  const [show, setShow] = useState(false);
+  const [Selectedproducts, setSelectedproducts] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleClose = () => setShow(false);
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const updatedParams = new URLSearchParams(location.search);
+    updatedParams.set('page', newPage);
+    navigate(`${location.pathname}?${updatedParams.toString()}`);
   };
 
   const handleClickEdit = (busId) => {
-    const selectedBus = buses.data?.find((bus) => bus.id === busId);
-    setSelectedBus(selectedBus);
+    const Selectedproducts = products?.data?.find((bus) => bus.id === busId);
+    setSelectedproducts(Selectedproducts);
     setShow(true);
   };
 
   const handleChange = (event) => {
-    setSelectedBus({
-      ...selectedBus,
+    setSelectedproducts({
+      ...Selectedproducts,
       [event.target.name]: event.target.value,
     })
-  }
+  };
 
   const handleSaveChange = async () => {
     try {
-      const data = await axios.put('https://api-54nh.onrender.com/buses/update_bus', selectedBus);
+      const data = await axios.post(`productos/update`, Selectedproducts);
       if (data.status === 200) {
         Swal.fire({
           title: data.data.message,
@@ -57,7 +66,7 @@ export default function Update() {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -71,7 +80,11 @@ export default function Update() {
         confirmButtonText: 'Si, deshabilitar!'
       }).then((result) => {
         if (result.isConfirmed) {
-          const { data } = axios.put(`https://api-54nh.onrender.com/buses/delete_bus/${id}/2`);
+          const dataToSend = {
+            "id": id,
+          }
+
+          const { data } = axios.post(`productos/delete`, dataToSend);
           Swal.fire(
             'Servicio Deshabilitado!',
             'El Servicio fue deshabilidato exitosamente.',
@@ -85,7 +98,8 @@ export default function Update() {
     } catch (error) {
       console.error(error);
     }
-  }
+
+  };
 
   const handleActive = async (id) => {
     try {
@@ -99,7 +113,19 @@ export default function Update() {
         confirmButtonText: 'Si, habilitar!'
       }).then((result) => {
         if (result.isConfirmed) {
-          const { data } = axios.put(`https://api-54nh.onrender.com/buses/delete_bus/${id}/1`);
+          const Selectedproduct = products?.data?.find((prodcut) => prodcut.id === id);
+          const dataToSend = {
+            "id": id,
+            "nombre": Selectedproduct.nombre,
+            "descripcion": Selectedproduct.descripcion,
+            "precio": Selectedproduct.precio,
+            "createdAt": Selectedproduct.createdAt,
+            "updatedAt": Selectedproduct.updatedAt,
+            "stock": Selectedproduct.stock,
+            "id_categoria": Selectedproduct.id_categoria,
+            "id_statud": 1
+          }
+          const { data } = axios.post(`productos/update`, dataToSend);
           Swal.fire(
             'Servicio Habilitado!',
             'El Servicio fue habilidato exitosamente.',
@@ -113,37 +139,16 @@ export default function Update() {
     } catch (error) {
       console.error(error);
     }
-  }
 
-  const itemsPerPage = 10;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-  const visibleBuses = buses.data?.slice(startIndex, endIndex);
-
-  const renderPageButtons = () => {
-    const totalPages = Math.ceil((buses.data?.length || 0) / itemsPerPage);
-
-    const buttons = [];
-    for (let page = 1; page <= totalPages; page++) {
-      buttons.push(
-        <button
-          key={page}
-          onClick={() => handlePageChange(page)}
-          className={currentPage === page ? styles.btn_active : styles.btn_pagination}
-        >
-          {page}
-        </button>
-      );
-    }
-
-    return buttons;
   };
+
+  // const visibleProduct = products?.slice(startIndex, endIndex);
+
 
 
   useEffect(() => {
-    dispatch(getBuses())
-  }, [dispatch, show]);
+    dispatch(getProducts(currentPage))
+  }, [dispatch, show, currentPage]);
 
   return (
     <div className="wrapper">
@@ -151,56 +156,64 @@ export default function Update() {
       <SideBar></SideBar>
       {/* Content Wrapper. Contains page content */}
       <div className="content-wrapper">
+        <section className="content-header">
+          <div className={styles.botonBack}>
+            <Link
+              to="/admin/home"
+              className="btn btn-outline-secondary"
+            >
+              Volver
+            </Link>
+          </div>
+        </section>
         {/* Content Header (Page header) */}
         <section className="content-header">
           <div className="container-fluid">
-            <div className="row mb-2">
-              <div className="col-sm-6">
-                <h1 className=''>Update Buses</h1>
-              </div>
-            </div>
+
+            <h1 className='text-center'>Lista de Productos</h1>
+
           </div>
         </section>
 
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Modificar Bus</Modal.Title>
+            <Modal.Title>Modificar Producto</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <form action="" className={styles.form}>
               <div className={styles.input}>
-                <label>Modelo</label>
+                <label>Nombre</label>
                 <input
                   type="text"
-                  name='modelo'
-                  value={selectedBus.modelo}
+                  name='nombre'
+                  value={Selectedproducts.nombre}
                   onChange={(event) => handleChange(event)}
                 />
               </div>
               <div className={styles.input}>
-                <label>Marca</label>
+                <label>Precio</label>
                 <input
                   type="text"
-                  name='marca'
-                  value={selectedBus.marca}
+                  name='precio'
+                  value={Selectedproducts.precio}
                   onChange={(event) => handleChange(event)}
                 />
               </div>
               <div className={styles.input}>
-                <label>Capacidad</label>
+                <label>Descripcion</label>
                 <input
                   type="text"
-                  name='capacidad'
-                  value={selectedBus.capacidad}
+                  name='descripcion'
+                  value={Selectedproducts.descripcion}
                   onChange={(event) => handleChange(event)}
                 />
               </div>
               <div className={styles.input}>
-                <label>Placa</label>
+                <label>Stock</label>
                 <input
                   type="text"
-                  name='placa'
-                  value={selectedBus.placa}
+                  name='stock'
+                  value={Selectedproducts.stock}
                   onChange={(event) => handleChange(event)}
                 />
               </div>
@@ -225,55 +238,72 @@ export default function Update() {
                     <div className="card-body">
                       <div className="pagination mb-1">
                         <button
-                          className={styles.btn_pagination}
-                          onClick={() => handlePageChange(currentPage - 1)}
+                          className={
+                            styles.btn_pagination
+                          }
+                          onClick={() =>
+                            handlePageChange(
+                              currentPage - 1
+                            )
+                          }
                           disabled={currentPage === 1}
                         >
-                          <BsArrowLeft className={styles.btn_icon} />
+                          <BsArrowLeft
+                            className={
+                              styles.btn_icon
+                            }
+                          />
                         </button>
-
-                        {renderPageButtons()}
-
                         <button
-                          className={styles.btn_pagination}
-                          onClick={() => handlePageChange(currentPage + 1)}
-                          disabled={endIndex >= (buses.data?.length || 0)}
+                          className={
+                            styles.btn_pagination
+                          }
+                          onClick={() =>
+                            handlePageChange(
+                              currentPage + 1
+                            )
+                          }
+
                         >
-                          <BsArrowRight className={styles.btn_icon} />
+                          <BsArrowRight
+                            className={
+                              styles.btn_icon
+                            }
+                          />
                         </button>
                       </div>
                       <Table bordered hover>
                         <thead>
                           <tr>
                             <th className={styles.th}>#</th>
-                            <th className={styles.th}>Modelo</th>
-                            <th className={styles.th}>Marca</th>
-                            <th className={styles.th}>Capacidad</th>
-                            <th className={styles.th}>Patente</th>
-                            <th className={styles.th}>Estado</th>
+                            <th className={styles.th}>Nombre</th>
+                            <th className={styles.th}>Precio</th>
+                            <th className={styles.th}>Descripcion</th>
+                            <th className={styles.th}>Stock</th>
+                            <th className={styles.th}>Status</th>
                           </tr>
                         </thead>
-                        {visibleBuses?.map((bus, index) => {
-                          return <tbody key={index}>
+                        {products?.data?.map((producto) => {
+                          return <tbody key={producto.id}>
                             <tr>
-                              <td className={styles.td}>{index + 1}</td>
-                              <td className={styles.td}>{bus.modelo}</td>
-                              <td className={styles.td}>{bus.marca}</td>
-                              <td className={styles.td}>{bus.capacidad}</td>
-                              <td className={styles.td}>{bus.placa}</td>
-                              <td className={bus.statud.id === 1 ? styles.activo : styles.inactivo}>{bus.statud.nombre}</td>
+                              <td className={styles.td}>{producto.id}</td>
+                              <td className={styles.td}>{producto.nombre}</td>
+                              <td className={styles.td}>$ {producto.precio}</td>
+                              <td className={styles.td}>{producto.descripcion}</td>
+                              <td className={styles.td}>{producto.stock}</td>
+                              <td className={producto.id_statud === 1 ? styles.activo : styles.inactivo}>{producto.id_statud}</td>
                               <td className={styles.td}>
-                                <button className={styles.button} onClick={() => handleClickEdit(bus.id)} disabled={bus.statud.id !== 1}>
+                                <button className={styles.button} onClick={() => handleClickEdit(producto.id)} disabled={producto.id_statud !== 1}>
                                   <BsPencilSquare className={styles.btn_icon} />
                                 </button>
                               </td>
                               <td className={styles.td}>
                                 {
-                                  bus.statud.id === 1
-                                    ? <button className={styles.button} onClick={() => handleDelete(bus.id)}>
+                                  producto.id_statud === 1
+                                    ? <button className={styles.button} onClick={() => handleDelete(producto.id)}>
                                       <BsTrash className={styles.btn_icon} />
                                     </button>
-                                    : <button className={styles.button} onClick={() => handleActive(bus.id)}>
+                                    : <button className={styles.button} onClick={() => handleActive(producto.id)}>
                                       <BsCheckLg className={styles.btn_icon} />
                                     </button>
                                 }

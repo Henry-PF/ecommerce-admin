@@ -1,134 +1,237 @@
-import React from 'react'
-import { SlLogout } from 'react-icons/sl'
-import '../home.css'
+import React from "react";
+import { SlLogout } from "react-icons/sl";
+import "../home.css";
+import logo from "../../../../assets/logo.png";
+import { Link } from "react-router-dom";
 
 export default function SideBar() {
     // --------------------------------Lista de Buses---------------------------------------
-    const [Busesistrue, setBusesistrue] = React.useState(false);
-    const [BusesOpen, setBusesOpen] = React.useState("nav-item menu-open");
-    const [BusesClose, setBusesClose] = React.useState("nav-item");
+    const [ProductIsTrue, setProductIsTrue] = React.useState(false);
+    const [ProductOpen, setProductOpen] = React.useState("nav-item menu-open");
+    const [ProductClose, setProductClose] = React.useState("nav-item");
     const BusesHandle = () => {
-        return setBusesistrue(!Busesistrue);
-    }
+        return setProductIsTrue(!ProductIsTrue);
+    };
     // -----------------------------------------------------------------------
     // --------------------------------Lista de Empresas---------------------------------------
     const [Empresasistrue, setEmpresasistrue] = React.useState(false);
-    const [EmpresasOpen, setEmpresasOpen] = React.useState("nav-item menu-open");
+    const [EmpresasOpen, setEmpresasOpen] =
+        React.useState("nav-item menu-open");
     const [EmpresasClose, setEmpresasClose] = React.useState("nav-item");
     const EmpresasHandle = () => {
         return setEmpresasistrue(!Empresasistrue);
-    }
+    };
     // -----------------------------------------------------------------------
-    // --------------------------------Lista de Rutas---------------------------------------
+    // --------------------------------Lista de Reviews---------------------------------------
     const [Rutasistrue, setRutasistrue] = React.useState(false);
     const [RutasOpen, setRutasOpen] = React.useState("nav-item menu-open");
     const [RutasClose, setRutasClose] = React.useState("nav-item");
     const RutasHandle = () => {
         return setRutasistrue(!Rutasistrue);
-    }
+    };
+    // -----------------------------------------------------------------------
+    // --------------------------------Lista de Fcatuas---------------------------------------
+    const [Facturasistrue, setFacturasistrue] = React.useState(false);
+    const [FacturasOpen, setFacturasOpen] = React.useState("nav-item menu-open");
+    const [FacturasClose, setFacturasClose] = React.useState("nav-item");
+    const FacturasHandle = () => {
+        return setFacturasistrue(!Facturasistrue);
+    };
     // -----------------------------------------------------------------------
 
     const handleClick = () => {
         localStorage.clear();
         window.location.reload();
-    }
+    };
     return (
         <div>
-            <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css" />
+            <link
+                rel="stylesheet"
+                href="../../plugins/fontawesome-free/css/all.min.css"
+            />
             {/* Theme style */}
             <link rel="stylesheet" href="../../dist/css/adminlte.min.css" />
             <aside className="main-sidebar sidebar-dark-primary elevation-4 position-fixed top-0">
                 {/* Brand Logo */}
-                <a href="/admin/home" className="brand-link">
-                    <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{ opacity: '.8' }} />
-                    <span className="brand-text font-weight-light">Ticket Express Admin</span>
-                </a>
+
+                <Link to="/admin/home" className="brand-link">
+                    <img
+                        src={logo}
+                        alt="Trendy Logo"
+                        className="brand-image img-circle elevation-3 bg-light"
+                    />
+                    <span className="brand-text font-weight-light">
+                        Trendy Admin
+                    </span>
+                </Link>
                 <div className="sidebar">
                     <nav className="mt-2">
-                        <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            <li className={Busesistrue === true ? BusesOpen : BusesClose} onClick={() => BusesHandle()}>
+                        <ul
+                            className="nav nav-pills nav-sidebar flex-column"
+                            data-widget="treeview"
+                            role="menu"
+                            data-accordion="false"
+                        >
+                            <li
+                                className={
+                                    ProductIsTrue === true
+                                        ? ProductOpen
+                                        : ProductClose
+                                }
+                                onClick={() => BusesHandle()}
+                            >
                                 <a href="#" className="nav-link">
                                     <i className="nav-icon fas fa-edit" />
                                     <p>
-                                        Buses
+                                        Productos
                                         <i className="fas fa-angle-left right" />
                                     </p>
                                 </a>
                                 <ul className="nav nav-treeview">
                                     <li className="nav-item">
-                                        <a href="/admin/buses/update" className="nav-link">
+                                        <Link
+                                            to="/admin/Productos/updateDelete"
+                                            className="nav-link"
+                                        >
                                             <i className="far fa-circle nav-icon" />
-                                            <p>Panel de Control</p>
-                                        </a>
+                                            <p>Lista de productos</p>
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="/admin/buses/create" className="nav-link ">
+                                        <Link
+                                            to="/admin/Productos/create"
+                                            className="nav-link "
+                                        >
                                             <i className="far fa-circle nav-icon" />
-                                            <p>Agregar Bus</p>
-                                        </a>
+                                            <p>Agregar Producto</p>
+                                        </Link>
                                     </li>
                                 </ul>
                             </li>
                         </ul>
-                        <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            <li className={Empresasistrue === true ? EmpresasOpen : EmpresasClose} onClick={() => EmpresasHandle()}>
+                        <ul
+                            className="nav nav-pills nav-sidebar flex-column"
+                            data-widget="treeview"
+                            role="menu"
+                            data-accordion="false"
+                        >
+                            <li
+                                className={
+                                    Empresasistrue === true
+                                        ? EmpresasOpen
+                                        : EmpresasClose
+                                }
+                                onClick={() => EmpresasHandle()}
+                            >
                                 <a href="#" className="nav-link">
                                     <i className="nav-icon fas fa-edit" />
                                     <p>
-                                        Empresas
+                                        Categorias
                                         <i className="fas fa-angle-left right" />
                                     </p>
                                 </a>
                                 <ul className="nav nav-treeview">
                                     <li className="nav-item">
-                                        <a href="/admin/empresas/create" className="nav-link ">
+                                        <Link
+                                            to="/admin/categorias/update"
+                                            className="nav-link"
+                                        >
                                             <i className="far fa-circle nav-icon" />
-                                            <p>Create</p>
-                                        </a>
+                                            <p>Lista de categorias</p>
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="/admin/empresas/update" className="nav-link">
+                                        <Link
+                                            to="/admin/categorias/create"
+                                            className="nav-link"
+                                        >
                                             <i className="far fa-circle nav-icon" />
-                                            <p>Update-Delete</p>
-                                        </a>
+                                            <p>Crear nueva categoria</p>
+                                        </Link>
                                     </li>
                                 </ul>
                             </li>
                         </ul>
-                        <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            <li className={Rutasistrue === true ? RutasOpen : RutasClose} onClick={() => RutasHandle()}>
+                        <ul
+                            className="nav nav-pills nav-sidebar flex-column"
+                            data-widget="treeview"
+                            role="menu"
+                            data-accordion="false"
+                        >
+                            <li
+                                className={
+                                    Rutasistrue === true
+                                        ? RutasOpen
+                                        : RutasClose
+                                }
+                                onClick={() => RutasHandle()}
+                            >
                                 <a href="#" className="nav-link">
                                     <i className="nav-icon fas fa-edit" />
                                     <p>
-                                        Rutas
+                                        Reviews
                                         <i className="fas fa-angle-left right" />
                                     </p>
                                 </a>
                                 <ul className="nav nav-treeview">
                                     <li className="nav-item">
-                                        <a href="/admin/Rutas/create" className="nav-link ">
+                                        <Link
+                                            to="/admin/reviews/view"
+                                            className="nav-link"
+                                        >
                                             <i className="far fa-circle nav-icon" />
-                                            <p>Create</p>
-                                        </a>
+                                            <p>Lista de reviews</p>
+                                        </Link>
                                     </li>
-                                    <li className="nav-item">
-                                        <a href="/admin/Rutas/update" className="nav-link">
+                                    {/* <li className="nav-item">
+                                        <Link
+                                            to="/admin/categorias/create"
+                                            className="nav-link"
+                                        >
                                             <i className="far fa-circle nav-icon" />
-                                            <p>Update-Delete</p>
-                                        </a>
+                                            <p>Crear nueva categoria</p>
+                                        </Link>
+                                    </li> */}
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                            <li className={Facturasistrue === true ? FacturasOpen : FacturasClose} onClick={() => FacturasHandle()}>
+                                <a href="#" className="nav-link">
+                                    <i className="nav-icon fas fa-edit" />
+                                    <p>
+                                        Facturas
+                                        <i className="fas fa-angle-left right" />
+                                    </p>
+                                </a>
+                                <ul className="nav nav-treeview">
+                                    <li className="nav-item">
+                                        {/* <a
+                                            href="/admin/categorias/create"
+                                            className="nav-link "
+                                        >
+                                        </a> */}
+                                        <Link
+                                            to="/admin/facturas/updateDelete"
+                                            className="nav-link"
+                                        >
+                                            <i className="far fa-circle nav-icon" />
+                                            <p>Ver Facturas</p>
+                                        </Link>
                                     </li>
                                 </ul>
                             </li>
                         </ul>
                     </nav>
                 </div>
-                <div className='btn_'>
-                    <SlLogout className='icon' />
-                    <button className='btn_exit' onClick={handleClick}> Salir</button>
-
+                <div className="btn_">
+                    <SlLogout className="icon" />
+                    <button className="btn_exit" onClick={handleClick}>
+                        {" "}
+                        Salir
+                    </button>
                 </div>
-            </aside >
-
-        </div >
-    )
+            </aside>
+        </div>
+    );
 }
