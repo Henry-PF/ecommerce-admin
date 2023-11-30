@@ -15,6 +15,7 @@ import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
 import "./App.css";
 import axios from 'axios'
 axios.defaults.baseURL = "https://backend-dev-jnpc.1.us-1.fl0.io/api"
+
 // axios.defaults.baseURL = "http://localhost:3002/api"
 
 function App() {

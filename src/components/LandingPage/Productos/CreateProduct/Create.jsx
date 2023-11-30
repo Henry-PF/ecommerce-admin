@@ -16,7 +16,11 @@ function Create({ categories }) {
     let dataToMap = [];
 
     if (categories.length) {
-        dataToMap = [...categories];
+        categories.map((categoria) => {
+            if(categoria.id_statud === 1) {
+                dataToMap.push(categoria)
+            }
+        });
     }
 
     const [dataProduct, setdataProduct] = useState({
@@ -28,7 +32,7 @@ function Create({ categories }) {
         id_statud: "",
         imagen: null,
     });
-    console.log(dataProduct);
+
     const handleChange = (event) => {
         if (event.target.name === 'imagen') {
             setdataProduct({
@@ -58,7 +62,7 @@ function Create({ categories }) {
         dataProduct.id_categoria.forEach((category) => {
             formData.append('id_categoria', category);
         });
-        formData.append('id_statud', dataProduct.id_statud);
+        formData.append('id_statud', Number(dataProduct.id_statud));
         formData.append('imagen', dataProduct.imagen);
 
         dispatch(createProcut(formData));
