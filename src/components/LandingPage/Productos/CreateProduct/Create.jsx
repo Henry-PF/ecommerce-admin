@@ -17,7 +17,7 @@ function Create({ categories }) {
 
     if (categories.length) {
         categories.map((categoria) => {
-            if(categoria.id_statud === 1) {
+            if (categoria.id_statud === 1) {
                 dataToMap.push(categoria)
             }
         });
@@ -31,7 +31,7 @@ function Create({ categories }) {
         id_categoria: [],
         imagen: null,
     });
-
+    console.log(dataProduct);
     const handleChange = (event) => {
         if (event.target.name === 'imagen') {
             setdataProduct({
@@ -52,14 +52,15 @@ function Create({ categories }) {
     };
 
 
-    const onSubmit = () => {
+    const onSubmit = (event) => {
+        event.preventDefault();
         const formData = new FormData();
         formData.append('nombre', dataProduct.nombre);
         formData.append('descripcion', dataProduct.descripcion);
         formData.append('precio', dataProduct.precio);
         formData.append('stock', dataProduct.stock);
         dataProduct.id_categoria.forEach((category) => {
-            formData.append('id_categoria', category);
+            formData.append(`id_categoria`, category);
         });
         formData.append('id_statud', Number(dataProduct.id_statud));
         formData.append('imagen', dataProduct.imagen);
@@ -187,7 +188,7 @@ function Create({ categories }) {
                                     />
                                 </FloatingLabel>
                             </div>
-                            
+
                             <Form.Group
                                 className={styles.formGroup}
                                 controlId="formBasicEmail"
