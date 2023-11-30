@@ -29,7 +29,6 @@ function Create({ categories }) {
         precio: 0,
         stock: 0,
         id_categoria: [],
-        id_statud: "",
         imagen: null,
     });
 
@@ -78,7 +77,6 @@ function Create({ categories }) {
                 precio: 0,
                 stock: 0,
                 id_categoria: [],
-                id_statud: "",
                 imagen: null
             })
         );
@@ -189,32 +187,7 @@ function Create({ categories }) {
                                     />
                                 </FloatingLabel>
                             </div>
-                            <Form.Group
-                                className={styles.formGroup}
-                                controlId="formBasicEmail"
-                            >
-                                <Form.Label className="text-black">
-                                    Status Del Producto
-                                </Form.Label>
-                                <FloatingLabel
-                                    controlId="floatingInput"
-                                    label="Estado"
-                                    className="w-100"
-                                >
-                                    <Form.Select
-                                        aria-label="Default select example"
-                                        value={dataProduct.id_statud}
-                                        name="id_statud"
-                                        onChange={(event) =>
-                                            handleChange(event)
-                                        }
-                                    >
-                                        <option>Selecciones un estado</option>
-                                        <option value="1">ACTIVO</option>
-                                        <option value="2">INACTIVO</option>
-                                    </Form.Select>
-                                </FloatingLabel>
-                            </Form.Group>
+                            
                             <Form.Group
                                 className={styles.formGroup}
                                 controlId="formBasicEmail"
