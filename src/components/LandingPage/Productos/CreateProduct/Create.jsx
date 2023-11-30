@@ -16,7 +16,11 @@ function Create({ categories }) {
     let dataToMap = [];
 
     if (categories.length) {
-        dataToMap = [...categories];
+        categories.map((categoria) => {
+            if (categoria.id_statud === 1) {
+                dataToMap.push(categoria)
+            }
+        });
     }
 
     const [dataProduct, setdataProduct] = useState({
@@ -25,7 +29,6 @@ function Create({ categories }) {
         precio: 0,
         stock: 0,
         id_categoria: [],
-        id_statud: "",
         imagen: null,
     });
     console.log(dataProduct);
@@ -49,16 +52,17 @@ function Create({ categories }) {
     };
 
 
-    const onSubmit = () => {
+    const onSubmit = (event) => {
+        event.preventDefault();
         const formData = new FormData();
         formData.append('nombre', dataProduct.nombre);
         formData.append('descripcion', dataProduct.descripcion);
         formData.append('precio', dataProduct.precio);
         formData.append('stock', dataProduct.stock);
         dataProduct.id_categoria.forEach((category) => {
-            formData.append('id_categoria', category);
+            formData.append(`id_categoria`, category);
         });
-        formData.append('id_statud', dataProduct.id_statud);
+        formData.append('id_statud', Number(dataProduct.id_statud));
         formData.append('imagen', dataProduct.imagen);
 
         dispatch(createProcut(formData));
@@ -74,7 +78,6 @@ function Create({ categories }) {
                 precio: 0,
                 stock: 0,
                 id_categoria: [],
-                id_statud: "",
                 imagen: null
             })
         );
@@ -185,32 +188,7 @@ function Create({ categories }) {
                                     />
                                 </FloatingLabel>
                             </div>
-                            <Form.Group
-                                className={styles.formGroup}
-                                controlId="formBasicEmail"
-                            >
-                                <Form.Label className="text-black">
-                                    Status Del Producto
-                                </Form.Label>
-                                <FloatingLabel
-                                    controlId="floatingInput"
-                                    label="Estado"
-                                    className="w-100"
-                                >
-                                    <Form.Select
-                                        aria-label="Default select example"
-                                        value={dataProduct.id_statud}
-                                        name="id_statud"
-                                        onChange={(event) =>
-                                            handleChange(event)
-                                        }
-                                    >
-                                        <option>Selecciones un estado</option>
-                                        <option value="1">ACTIVO</option>
-                                        <option value="2">INACTIVO</option>
-                                    </Form.Select>
-                                </FloatingLabel>
-                            </Form.Group>
+
                             <Form.Group
                                 className={styles.formGroup}
                                 controlId="formBasicEmail"
