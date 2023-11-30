@@ -1,15 +1,36 @@
-import { GET_CITIES, GET_PROVINCE, SEARCH_RESULTS, USER_LOGIN, USER_REGISTER, GET_TERMINAL, GET_ALL_RUTES, GET_BUSES, GET_ALL_COMPANIES, GET_ALL_USERS, CREATED_ROUTE } from './action-types'
+import {
+    FILTER_INACTIVE_USERS,
+    GET_REVIEWS,
+    SEARCH_RESULTS,
+    USER_LOGIN,
+    GET_TERMINAL,
+    GET_ALL_RUTES,
+    DELETE_RUTE,
+    GET_ALL_PRODUCTS,
+    GET_PRODUCTOS,
+    GET_ALL_CATEGORIES,
+    GET_ALL_COMPANIES,
+    GET_ALL_USERS,
+    CREATED_ROUTE,
+    GET_FACTURAS_MAP,
+    GET_ALL_FACTURAS,
+    GET_SEARCH_DATA,
+    GET_SEARCH_CATEGORY,
+} from "./action-types";
 
 const initialState = {
     data: [],
-    buses: [],
+    products: [],
+    categories: [],
     users: [],
     trips: [],
-    cities: [],
-    province: [],
+    inactiveUsers: [],
+    reviews: [],
     companies: [],
     userGoogle: {},
-    terminales: []
+    terminales: [],
+    beneficios: [],
+    facturas: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -17,7 +38,13 @@ const rootReducer = (state = initialState, action) => {
         case SEARCH_RESULTS:
             const { origin, destination, departureDate } = action.payload;
             const filter = state.trips.filter((trip) => {
-                return trip.origin.toLowerCase() === origin.toLowerCase() && trip.destination.toLowerCase() === destination.toLowerCase() && trip.departureDate.toLowerCase() === departureDate.toLowerCase();
+                return (
+                    trip.origin.toLowerCase() === origin.toLowerCase() &&
+                    trip.destination.toLowerCase() ===
+                        destination.toLowerCase() &&
+                    trip.departureDate.toLowerCase() ===
+                        departureDate.toLowerCase()
+                );
             });
 
             return {
@@ -28,48 +55,81 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userGoogle: action.payload,
-            }
+            };
+        case GET_FACTURAS_MAP:
+            return {
+                ...state,
+                beneficios: action.payload,
+            };
+        case GET_ALL_FACTURAS:
+            return {
+                ...state,
+                facturas: action.payload,
+            };
         case GET_ALL_USERS:
             return {
                 ...state,
+                data: action.payload,
                 users: action.payload,
-            }
-        case GET_CITIES:
-            return {
-                ...state,
-                cities: action.payload,
-            }
+                inactiveUsers: action.payload.filter(
+                    (user) => user.statud.id !== 1
+                ),
+            };
         case GET_TERMINAL:
             return {
                 ...state,
                 terminales: action.payload,
-            }
+            };
         case GET_ALL_RUTES:
             return {
                 ...state,
                 trips: action.payload,
-            }
-        case GET_PROVINCE:
+            };
+        case GET_REVIEWS:
             return {
                 ...state,
-                province: action.payload,
-            }
+                reviews: action.payload,
+            };
 
         case GET_ALL_COMPANIES:
             return {
                 ...state,
                 companies: action.payload,
-            }
-        case GET_BUSES:
+                categories: action.payload,
+            };
+        case GET_PRODUCTOS:
             return {
                 ...state,
-                buses: action.payload,
-            }
+                products: action.payload,
+            };
         case CREATED_ROUTE:
             return {
                 ...state,
-                route: action.payload
-            }
+                route: action.payload,
+            };
+        case GET_ALL_CATEGORIES:
+            return {
+                ...state,
+                categories: action.payload,
+            };
+        case GET_SEARCH_DATA:
+            return {
+                ...state,
+                data: state.users.filter((user) =>
+                    user.usuario
+                        .toLowerCase()
+                        .includes(action.payload.toLowerCase())
+                ),
+            };
+        case GET_SEARCH_CATEGORY:
+            return {
+                ...state,
+                categories: state.companies.filter((categoria) =>
+                    categoria.nombre
+                        .toLowerCase()
+                        .includes(action.payload.toLowerCase())
+                ),
+            };
         default:
             return state;
     }

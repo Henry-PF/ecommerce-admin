@@ -1,148 +1,201 @@
-import axios from 'axios';
-import { GET_CITIES, GET_PROVINCE, SEARCH_RESULTS, USER_LOGIN, GET_TERMINAL, GET_ALL_RUTES, DELETE_RUTE, GET_BUSES, GET_ALL_COMPANIES, GET_ALL_USERS, CREATED_ROUTE } from './action-types'
+import axios from "axios";
+import {
+    GET_REVIEWS,
+    SEARCH_RESULTS,
+    USER_LOGIN,
+    GET_TERMINAL,
+    GET_PRODUCTOS,
+    GET_ALL_COMPANIES,
+    GET_ALL_USERS,
+    GET_FACTURAS_MAP,
+    GET_ALL_FACTURAS,
+    GET_SEARCH_DATA,
+    GET_SEARCH_CATEGORY,
+} from "./action-types";
+
+/* const url = process.env.BACKEND_URL; */
 
 export const searchResults = (data) => {
     return {
         type: SEARCH_RESULTS,
-        payload: data
-    }
-}
-export const createRoute = (formData) => async (dispatch) => {
+        payload: data,
+    };
+};
+
+export const deleteUsers = (iduser) => async () => {
     try {
-        const { data } = await axios.post('https://api-54nh.onrender.com/rutas', formData);
-        dispatch({
-            type: CREATED_ROUTE,
-            payload: data
-        })
+        const response = await axios.post(`/usuarios/delete`, iduser);
     } catch (error) {
-        console.error(error);
+        console.error("Error en el borrado:", error);
     }
 };
 
-export const deleteRute = (idRutes) => async () => {
-    try {
-        const response = await axios.post('https://api-54nh.onrender.com/rutas/delete', idRutes);
-        console.log(response);
-    } catch (error) {
-        console.error('Error en el borrado:', error);
-    }
-};
-export const deleteUsers = (iduser) => async () => {
-    try {
-        const response = await axios.post('https://api-54nh.onrender.com/usuarios/delete', iduser);
-        console.log(response);
-    } catch (error) {
-        console.error('Error en el borrado:', error);
-    }
-};
-export const getAllRutes = () => {
-    return async (dispatch) => {
-        try {
-            const { data } = await axios.get('https://api-54nh.onrender.com/rutas/getAll');
-            dispatch({
-                type: GET_ALL_RUTES,
-                payload: data.data
-            })
-        } catch (error) {
-            console.error(error);
-        }
-    }
-};
 export const getAllUsers = () => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get('https://api-54nh.onrender.com/usuarios/getAll');
-            console.log(data);
+            const { data } = await axios.get(`/usuarios`);
+
             dispatch({
                 type: GET_ALL_USERS,
-                payload: data.data
-            })
+                payload: data.data,
+            });
         } catch (error) {
             console.error(error);
         }
-    }
+    };
+};
+export const getFacturasMap = () => {
+    let indice = 0;
+    let beneficios = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.get(`/facturas`);
+            const facturas = data.data;
+
+            while (indice < 13) {
+                facturas.map((factura) => {
+                    if (
+                        factura.createdAt[5] == indice &&
+                        factura.createdAt[6] == "-"
+                    ) {
+                        const resultado = beneficios[indice - 1] + 1;
+                        beneficios[indice - 1] = resultado;
+                    } else if (
+                        indice > 9 &&
+                        Number(factura.createdAt[5]) === 1
+                    ) {
+                        if (
+                            Number(factura.createdAt[6]) === 0 ||
+                            Number(factura.createdAt[6]) === 1 ||
+                            Number(factura.createdAt[6]) === 2
+                        ) {
+                            let number =
+                                factura.createdAt[5] + factura.createdAt[6];
+                            if (number == indice) {
+                                const resultado = beneficios[indice - 1] + 1;
+                                beneficios[indice - 1] = resultado;
+                            }
+                        }
+                    }
+                });
+                indice++;
+            }
+
+            dispatch({
+                type: GET_FACTURAS_MAP,
+                payload: beneficios,
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    };
+};
+export const getAllFacturas = () => {
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.get(`/facturas`);
+            dispatch({
+                type: GET_ALL_FACTURAS,
+                payload: data.data,
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    };
 };
 
 export const userLogin = () => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get('https://api-54nh.onrender.com/auth/perfil')
-            console.log('user', data.user);
+            const { data } = await axios.get(`/auth/perfil`);
+            console.log("user", data.user);
             dispatch({
                 type: USER_LOGIN,
-                payload: data
-            })
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-
-export const getCities = () => {
-    return async (dispatch) => {
-        try {
-            const { data } = await axios.get('https://api-54nh.onrender.com/ciudades/get_cities');
-            dispatch({
-                type: GET_CITIES,
                 payload: data,
-            })
+            });
         } catch (error) {
             console.error(error);
         }
-    }
-}
+    };
+};
+
 export const getTerminales = () => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get('https://api-54nh.onrender.com/terminal/get');
+            const { data } = await axios.get(`/terminal/get`);
             dispatch({
                 type: GET_TERMINAL,
                 payload: data,
-            })
+            });
         } catch (error) {
             console.error(error);
         }
-    }
-}
+    };
+};
 
-export const getProvince = () => {
+export const getAllReviews = () => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get('https://api-54nh.onrender.com/provincias/get_province');
+            const { data } = await axios.get(`/reviews`);
             dispatch({
-                type: GET_PROVINCE,
+                type: GET_REVIEWS,
                 payload: data,
-            })
+            });
         } catch (error) {
             console.error(error);
         }
-    }
-}
+    };
+};
 
-export const getAllCompanies = () => {
+export const getAllCategories = () => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get('https://api-54nh.onrender.com/empresas/get');
+            const { data } = await axios.get(`/categorias`);
+
             dispatch({
                 type: GET_ALL_COMPANIES,
-                payload: data
-            })
+                payload: data.data,
+            });
         } catch (error) {
             console.log(error);
         }
-    }
-}
+    };
+};
 
-export const getBuses = () => {
+export const getProducts = (page) => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get('https://api-54nh.onrender.com/buses/get_buses')
+            const { data } = await axios.get(`/productos?page=${page}`);
+            console.log(data);
             dispatch({
-                type: GET_BUSES,
-                payload: data,
-            })
+                type: GET_PRODUCTOS,
+                payload: data
+            });
         } catch (error) {
             console.error(error);
         }
+    };
+};
+export const createProcut = (formData) => async () => {
+    console.log("REDUX", formData);
+    try {
+        const response = await axios.post(`/productos`, formData);
+        console.log("Registro exitoso:", response.data);
+    } catch (error) {
+        console.error("Error en el registro:", error.message);
     }
-}
+};
+
+export const searchData = (data) => {
+    return {
+        type: GET_SEARCH_DATA,
+        payload: data,
+    };
+};
+export const searchCategory = (data) => {
+    return {
+        type: GET_SEARCH_CATEGORY,
+        payload: data,
+    };
+};
