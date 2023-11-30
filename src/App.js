@@ -2,8 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./components/LandingPage/Home/Home";
 import Login from "./components/Login/Login";
 /* Rutas Product */
-import Create from './components/LandingPage/Productos/CreateProduct/Create';
-import Update from './components/LandingPage/Productos/UpdateProduct/Update';
+import Create from "./components/LandingPage/Productos/CreateProduct/Create";
+import Update from "./components/LandingPage/Productos/UpdateProduct/Update";
 /* Rutas Facturas */
 import ReadFacturas from "./components/LandingPage/Facturas/ReadFacturas/ReadFacturas";
 /* Rutas Categorias */
@@ -13,8 +13,9 @@ import UpdateCategorias from "./components/LandingPage/Categorias/UpdateCategori
 import View from "./components/LandingPage/Reviews/View/View";
 import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
 import "./App.css";
-import axios from 'axios'
-axios.defaults.baseURL = "https://backend-dev-jnpc.1.us-1.fl0.io/api"
+import axios from "axios";
+import SendMails from "./components/LandingPage/Mails/SendMails";
+axios.defaults.baseURL = "https://backend-dev-jnpc.1.us-1.fl0.io/api";
 // axios.defaults.baseURL = "http://localhost:3002/api"
 
 function App() {
@@ -24,10 +25,22 @@ function App() {
                 <Route exact path="/" element={<Login />} />
                 <Route element={<ProtectedRoutes />}>
                     {/* Rutas Productos */}
-                    <Route exact path='/admin/Productos/create' element={<Create />} />
-                    <Route exact path='/admin/Productos/updateDelete' element={<Update />} />
+                    <Route
+                        exact
+                        path="/admin/Productos/create"
+                        element={<Create />}
+                    />
+                    <Route
+                        exact
+                        path="/admin/Productos/updateDelete"
+                        element={<Update />}
+                    />
                     {/* Rutas Facturas */}
-                    <Route exact path='/admin/facturas/updateDelete' element={<ReadFacturas />} />
+                    <Route
+                        exact
+                        path="/admin/facturas/updateDelete"
+                        element={<ReadFacturas />}
+                    />
                     {/* Rutas Categorias */}
 
                     <Route
@@ -56,6 +69,12 @@ function App() {
                         exact
                         path="/admin/reviews/view"
                         element={<View />}
+                    />
+                    {/* Rutas Mails */}
+                    <Route
+                        exact
+                        path="/admin/Mail/Send"
+                        element={<SendMails />}
                     />
                     {/* Rutas Dashboard */}
                     <Route exact path="/admin/home" element={<Home />} />
