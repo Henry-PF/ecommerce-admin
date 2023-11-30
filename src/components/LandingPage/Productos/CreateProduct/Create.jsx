@@ -242,19 +242,16 @@ function Create({ categories }) {
                                 Imagen Del Producto
                             </Form.Label>
                             <div className={styles.input_name}>
-                                <FloatingLabel
-                                    controlId="floatingPassword"
-                                    className="w-100"
-                                >
-                                    <Form.Control
-                                        className={styles.form_input}
-                                        type="file"
-                                        accept="image/*"
-                                        name="imagen"
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </FloatingLabel>
+
+                                <Form.Control
+                                    className={styles.form_input}
+                                    type="file"
+                                    accept="image/*"
+                                    name="imagen"
+                                    onChange={handleChange}
+                                    required
+                                />
+
                             </div>
                             <Button
                                 className="w-100 my-4"
