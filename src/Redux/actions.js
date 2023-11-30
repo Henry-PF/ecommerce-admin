@@ -167,7 +167,6 @@ export const getProducts = (page) => {
     return async (dispatch) => {
         try {
             const { data } = await axios.get(`/productos?page=${page}`);
-            console.log(data);
             dispatch({
                 type: GET_PRODUCTOS,
                 payload: data

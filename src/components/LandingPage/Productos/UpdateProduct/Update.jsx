@@ -37,6 +37,7 @@ export default function Update() {
 
   const handleClickEdit = (busId) => {
     const Selectedproducts = products?.data?.find((bus) => bus.id === busId);
+    console.log(Selectedproducts);
     setSelectedproducts(Selectedproducts);
     setShow(true);
   };
