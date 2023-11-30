@@ -85,7 +85,6 @@ export default function Update() {
             id: selectedCompany.id,
             id_statud: 2,
         };
-        console.log(selectedCompany);
         try {
             Swal.fire({
                 title: "Esta Seguro?",
@@ -130,7 +129,7 @@ export default function Update() {
             }).then((result) => {
                 if (result.isConfirmed) {
                     const { data } = axios.post(
-                        `/categorias/active`,
+                        `categorias/delete`,
                         idCategoria
                     );
                     Swal.fire("Categoria habilitada!", "success").then(() => {
